@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import excelGenerator.ChromosomeToExcel;
+import excelGenerator.ExcelGenerator;
 import util.GeneratorFile;
 
 public class AG {
@@ -18,6 +20,7 @@ public class AG {
 	private Mutation mutation;
 	private FactoryChromosome factoryChromosome;
 	private GeneratorFile generatorFile;
+	private ChromosomeToExcel chromosomeToExcel;
 
 	private void registerLog() throws IOException {
 		for (ChromosomeBinary chromosome : population) {
@@ -28,6 +31,7 @@ public class AG {
 	}
 
 	public AG(int sizePopulation, int countGeneration) throws Exception {
+		this.chromosomeToExcel = new ChromosomeToExcel();
 		this.selection = new Selection();
 		this.fitness = new Fitness();
 		this.crossover = new Crossover();
@@ -46,17 +50,17 @@ public class AG {
 		for (int i = 0; i < countGeneration; i++) {
 			System.out.println("Geração: " + (i + 1));
 
-			generatorFile
-					.insertLog("----------------------------Generação: (" + (i + 1) + ") --------------------------");
+			generatorFile.insertLog("----------------------------Generação: (" + (i + 1) + ") --------------------------");
 			//
 			// EVALUATION FITNESS TO PARENTS
 			fitness.fitnessGeneratorClassificator(population);
 
 			// SELECTION PARENTS TO NEXT GENERATION
-//			List<ChromosomeBinary> parents = selection.rouletteSelect(population, sizePopulation * 2, false);
+			// List<ChromosomeBinary> parents =
+			// selection.rouletteSelect(population, sizePopulation * 2, false);
 			// VALUE RANGE BETWEEN 0.5 and 1
-			 List<ChromosomeBinary> parents = selection.rank(population, (int)(sizePopulation * 0.9));
-
+			List<ChromosomeBinary> parents = selection.rank(population, (int) (sizePopulation * 0.9));
+			
 			// CROSSOVER
 			List<ChromosomeBinary> offspring = crossover.onePoint(parents, 1);
 
@@ -72,21 +76,23 @@ public class AG {
 			nextPopulation.addAll(offspring);
 			// population = selection.rouletteSelect(chromosomeBinaries,
 			// sizePopulation, false);
+			population.clear();
 			population = selection.rank(nextPopulation, sizePopulation);
 
 			registerLog();
+			chromosomeToExcel.converterChromosomeToExcel(population, i);
 
 		}
 
-		System.out.println("FINAL DA SELEÇÃO");
-
 		generatorFile.closeLog();
-
+		chromosomeToExcel.closeFile();
+		System.out.println("FINAL DA SELEÇÃO");
+		
 	}
 
 	public static void main(String[] args) throws Exception {
-		// SIZE POPULATION, COUNT GENERATION, ISUNIQUE GENES
-		new AG(20, 20);
+		// SIZE POPULATION, COUNT GENERATION
+		new AG(20, 5);
 	}
 
 	protected int geratorID() {

@@ -105,10 +105,6 @@ public class ChromosomeBinary implements Comparable<ChromosomeBinary> {
 		return ID;
 	}
 
-	public void setID(int iD) {
-		ID = iD;
-	}
-
 	public boolean isUnique() {
 		return isUnique;
 	}
