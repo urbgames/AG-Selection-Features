@@ -102,6 +102,9 @@ public class Test {
 
 		population = new Selection().rank(population, 4);
 
+		fitness.fitnessGeneratorClassificator(population);
+		
+
 		population.forEach(x->System.out.println("Individuo: " + x.getID() +" - Fitness: "+ x.getFitnessValue()));
 
 		

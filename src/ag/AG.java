@@ -26,6 +26,7 @@ public class AG {
 		for (ChromosomeBinary chromosome : population) {
 			generatorFile.insertLog("Individuo: " + chromosome.getID());
 			generatorFile.insertLog("Fitness: " + chromosome.getFitnessValue());
+			generatorFile.insertLog(chromosome.toStringBinaryGenesNumbers());
 			generatorFile.insertLog("");
 		}
 	}
@@ -59,7 +60,7 @@ public class AG {
 			// List<ChromosomeBinary> parents =
 			// selection.rouletteSelect(population, sizePopulation * 2, false);
 			// VALUE RANGE BETWEEN 0.5 and 1
-			List<ChromosomeBinary> parents = selection.rank(population, (int) (sizePopulation * 0.9));
+			List<ChromosomeBinary> parents = selection.rank(population, (int) (sizePopulation * 0.7));
 			
 			// CROSSOVER
 			List<ChromosomeBinary> offspring = crossover.onePoint(parents, 1);
@@ -92,7 +93,7 @@ public class AG {
 
 	public static void main(String[] args) throws Exception {
 		// SIZE POPULATION, COUNT GENERATION
-		new AG(20, 5);
+		new AG(100, 50);
 	}
 
 	protected int geratorID() {

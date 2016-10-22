@@ -117,7 +117,7 @@ public class ChromosomeBinary implements Comparable<ChromosomeBinary> {
 		return binaryGenes;
 	}
 
-	public String toStringBinaryGenesToStringNumber() {
+	public String toStringBinaryGenesNumbers() {
 		String arrayString = "[";
 		for (int i = 0; i < binaryGenes.length; i++) {
 			arrayString += binaryGenes[i] ? 1 : 0;
@@ -129,7 +129,7 @@ public class ChromosomeBinary implements Comparable<ChromosomeBinary> {
 		return arrayString;
 	}
 
-	public String toStringBinaryGenesToStringBoolean() {
+	public String toStringBinaryGenesBoolean() {
 		String arrayString = "[";
 		for (int i = 0; i < binaryGenes.length; i++) {
 			arrayString += binaryGenes[i] ? "true" : "false";
