@@ -36,7 +36,7 @@ public final class Classification {
 	}
 
 	public float getFitnessClafissation(boolean[] binaryGenes) throws Exception {
-	
+
 		Instances dataTemp = dataAll;
 		int count = 0;
 		String optionsRemove = "";
@@ -50,16 +50,16 @@ public final class Classification {
 		}
 
 		if (count != 0)
-			optionsRemove = optionsRemove.substring(0, optionsRemove.length() - 2);
+			optionsRemove = optionsRemove.substring(0, optionsRemove.length() - 1);
 
 		String[] options = new String[2];
 		options[0] = "-R";
 		options[1] = optionsRemove;
-		
+
 		Remove remove = new Remove();
 		remove.setOptions(options);
 		remove.setInputFormat(dataTemp);
-		
+
 		dataTemp = Filter.useFilter(dataTemp, remove);
 
 		return classification(dataTemp);
@@ -75,11 +75,17 @@ public final class Classification {
 		RemovePercentage percentageData = new RemovePercentage();
 		percentageData.setInputFormat(data);
 
-		percentageData.setOptions(Utils.splitOptions("-P 10"));
-		Instances dataTrain = Filter.useFilter(data, percentageData);
+		// percentageData.setOptions(Utils.splitOptions("-P 10"));
+		// Instances dataTrain = Filter.useFilter(data, percentageData);
+		//
+		// percentageData.setOptions(Utils.splitOptions("-V -P 10"));
+		// Instances dataTest = Filter.useFilter(data, percentageData);
 
-		percentageData.setOptions(Utils.splitOptions("-V -P 10"));
+		percentageData.setOptions(Utils.splitOptions("-P 90"));
 		Instances dataTest = Filter.useFilter(data, percentageData);
+
+		percentageData.setOptions(Utils.splitOptions("-V -P 90"));
+		Instances dataTrain = Filter.useFilter(data, percentageData);
 
 		classifier.buildClassifier(dataTrain);
 		Evaluation eval = new Evaluation(dataTrain);

@@ -93,7 +93,7 @@ public class AG {
 
 	public static void main(String[] args) throws Exception {
 		// SIZE POPULATION, COUNT GENERATION
-		new AG(100, 50);
+		new AG(100, 100);
 	}
 
 	protected int geratorID() {

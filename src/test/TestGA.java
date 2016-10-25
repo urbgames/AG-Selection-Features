@@ -1,4 +1,4 @@
-package util;
+package test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -16,10 +16,10 @@ import ag.FactoryChromosome;
 import ag.Fitness;
 import ag.Selection;
 
-public class Test {
+public class TestGA {
 
 	public static void main(String[] args) throws Exception {
-
+		
 		// ArrayList<Integer> arrayList = new ArrayList<>();
 		// int value = 10000;
 		// arrayList.add(1);
@@ -85,31 +85,30 @@ public class Test {
 
 		// System.out.println(new Random().nextInt(1));
 
-		FactoryChromosome factoryChromosome = FactoryChromosome.getInstance();
-		List<ChromosomeBinary> population = new ArrayList<>();
+		// FactoryChromosome factoryChromosome =
+		// FactoryChromosome.getInstance();
+		// List<ChromosomeBinary> population = new ArrayList<>();
+		//
+		// for (int i = 0; i < 3; i++) {
+		// ChromosomeBinary chromosome = factoryChromosome.factoryChromosome();
+		// chromosome.randonInitializeGenesBinary();
+		// population.add(chromosome);
+		// }
+		//
+		// // EVALUATION FITNESS TO PARENTS
+		// Fitness fitness = new Fitness();
+		// fitness.fitnessGeneratorClassificator(population);
+		//
+		// population.forEach(x -> System.out.println("Individuo: " + x.getID()
+		// + " - Fitness: " + x.getFitnessValue()));
+		//
+		// population = new Selection().rank(population, 4);
+		//
+		// fitness.fitnessGeneratorClassificator(population);
+		//
+		// population.forEach(x -> System.out.println("Individuo: " + x.getID()
+		// + " - Fitness: " + x.getFitnessValue()));
 
-		for (int i = 0; i < 3; i++) {
-			ChromosomeBinary chromosome = factoryChromosome.factoryChromosome();
-			chromosome.randonInitializeGenesBinary();
-			population.add(chromosome);
-		}
-
-		// EVALUATION FITNESS TO PARENTS
-		Fitness fitness = new Fitness();
-		fitness.fitnessGeneratorClassificator(population);
-		
-		population.forEach(x->System.out.println("Individuo: " + x.getID() +" - Fitness: "+ x.getFitnessValue()));		
-
-		population = new Selection().rank(population, 4);
-
-		fitness.fitnessGeneratorClassificator(population);
-		
-
-		population.forEach(x->System.out.println("Individuo: " + x.getID() +" - Fitness: "+ x.getFitnessValue()));
-
-		
-		
-		
 	}
 
 	protected static int geratorID(int IDGenarator) {
