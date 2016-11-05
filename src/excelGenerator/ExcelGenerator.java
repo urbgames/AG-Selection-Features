@@ -16,11 +16,12 @@ import org.apache.poi.ss.util.CellUtil;
 
 public class ExcelGenerator {
 
-	private final String fileName = "D:/exportInfoGA.xls";
+	private String fileName = "D:/exportInfoGA";
 	private HSSFWorkbook workbook;
 	private HSSFSheet sheetInfoGA;
 
-	public ExcelGenerator() {
+	public ExcelGenerator(String order) {
+		this.fileName += order+".xls";
 		workbook = new HSSFWorkbook();
 		sheetInfoGA = workbook.createSheet("InfoGA");
 	}
@@ -58,6 +59,7 @@ public class ExcelGenerator {
 
 	public void saveFile() {
 		try {
+			System.out.println(fileName);
 			FileOutputStream outputStream = new FileOutputStream(new File(fileName));
 			workbook.write(outputStream);
 			outputStream.close();

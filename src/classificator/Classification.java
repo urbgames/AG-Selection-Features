@@ -12,10 +12,10 @@ import weka.filters.unsupervised.instance.RemovePercentage;
 
 public final class Classification {
 
-	private String base1 = "C:\\Users\\Urbgames\\Google Drive\\Mestrado\\_PROJETO\\KEYSTROKE\\Experimentos\\VECTOR - ALL.arff";
-	private String base2 = "D:\\BACKUP\\Documentos\\_KEYSTROKE\\_BASE 01\\keystroke_normalized_all.arff";
+	private String base1 = "C:\\Users\\Urbgames\\\\Documents\\VECTOR - ALL.arff";
+	private String base2 = "C:\\Users\\Urbgames\\Documents\\keystroke_normalized_1.arff";
 	private static Instances dataAll = null;
-	private String baseCurrent = base1;
+	private String baseCurrent = base2;
 
 	private static volatile Classification classification;
 

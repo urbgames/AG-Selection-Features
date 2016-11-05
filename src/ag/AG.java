@@ -31,8 +31,8 @@ public class AG {
 		}
 	}
 
-	public AG(int sizePopulation, int countGeneration) throws Exception {
-		this.chromosomeToExcel = new ChromosomeToExcel();
+	public AG(int sizePopulation, int countGeneration, String order) throws Exception {
+		this.chromosomeToExcel = new ChromosomeToExcel(order);
 		this.selection = new Selection();
 		this.fitness = new Fitness();
 		this.crossover = new Crossover();
@@ -51,7 +51,8 @@ public class AG {
 		for (int i = 0; i < countGeneration; i++) {
 			System.out.println("Geração: " + (i + 1));
 
-			generatorFile.insertLog("----------------------------Generação: (" + (i + 1) + ") --------------------------");
+			generatorFile
+					.insertLog("----------------------------Generação: (" + (i + 1) + ") --------------------------");
 			//
 			// EVALUATION FITNESS TO PARENTS
 			fitness.fitnessGeneratorClassificator(population);
@@ -61,7 +62,7 @@ public class AG {
 			// selection.rouletteSelect(population, sizePopulation * 2, false);
 			// VALUE RANGE BETWEEN 0.5 and 1
 			List<ChromosomeBinary> parents = selection.rank(population, (int) (sizePopulation * 0.7));
-			
+
 			// CROSSOVER
 			List<ChromosomeBinary> offspring = crossover.onePoint(parents, 1);
 
@@ -88,12 +89,18 @@ public class AG {
 		generatorFile.closeLog();
 		chromosomeToExcel.closeFile();
 		System.out.println("FINAL DA SELEÇÃO");
-		
+
 	}
 
 	public static void main(String[] args) throws Exception {
 		// SIZE POPULATION, COUNT GENERATION
-		new AG(100, 100);
+		new AG(60, 50, "0");
+
+		// for (int i = 0; i < 30; i++) {
+		// System.out.println("------------------ Repetição" + i +
+		// "-------------------");
+		// new AG(60, 50, "" + (i + 1));
+		// }
 	}
 
 	protected int geratorID() {

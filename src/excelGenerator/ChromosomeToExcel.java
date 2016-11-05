@@ -10,8 +10,8 @@ public class ChromosomeToExcel {
 
 	private ExcelGenerator excelGenerator;
 	
-	public ChromosomeToExcel() {
-		excelGenerator = new ExcelGenerator();
+	public ChromosomeToExcel(String order) {
+		excelGenerator = new ExcelGenerator(order);
 	}
 	
 	public void converterChromosomeToExcel(List<ChromosomeBinary> chromosomes, int generation) {
