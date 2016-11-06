@@ -12,7 +12,7 @@ public class GeneratorFile {
 
 	public GeneratorFile() throws IOException {
 
-		this.file = new File("D:/GA_SELECTION.txt");
+		this.file = new File("D:/GA_SELECTION_BASE.txt");
 		new PrintWriter(this.file).close();
 		fileWritter = new FileWriter(this.file, true);
 

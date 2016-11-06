@@ -9,7 +9,7 @@ public class ChromosomeBinary implements Comparable<ChromosomeBinary> {
 	private int ID;
 	private boolean isUnique;
 	private int maxCountGenes;
-	private float fitnessValue;
+	private double fitnessValue;
 	private boolean[] binaryGenes;
 
 	public ChromosomeBinary(int ID, boolean isUnique, int maxCountGenes) {
@@ -77,7 +77,7 @@ public class ChromosomeBinary implements Comparable<ChromosomeBinary> {
 		return this.genes.size();
 	}
 
-	public float getFitnessValue() {
+	public double getFitnessValue() {
 		return fitnessValue;
 	}
 

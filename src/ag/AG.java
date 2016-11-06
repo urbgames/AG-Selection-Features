@@ -58,11 +58,13 @@ public class AG {
 			fitness.fitnessGeneratorClassificator(population);
 
 			// SELECTION PARENTS TO NEXT GENERATION
-			// List<ChromosomeBinary> parents =
-			// selection.rouletteSelect(population, sizePopulation * 2, false);
 			// VALUE RANGE BETWEEN 0.5 and 1
-			List<ChromosomeBinary> parents = selection.rank(population, (int) (sizePopulation * 0.7));
-
+			List<ChromosomeBinary> parents = new ArrayList<>();
+			parents.addAll(selection.rank(population, sizePopulation / 3));
+			System.out.println(population.size());
+			System.out.println(sizePopulation / 3);
+			parents.addAll(selection.rouletteSelectNormalized(population, 90, true));
+			
 			// CROSSOVER
 			List<ChromosomeBinary> offspring = crossover.onePoint(parents, 1);
 
@@ -76,13 +78,18 @@ public class AG {
 			List<ChromosomeBinary> nextPopulation = new ArrayList<>();
 			nextPopulation.addAll(parents);
 			nextPopulation.addAll(offspring);
-			// population = selection.rouletteSelect(chromosomeBinaries,
-			// sizePopulation, false);
+			System.out.println(nextPopulation.size());
+			
 			population.clear();
-			population = selection.rank(nextPopulation, sizePopulation);
-
+			population.addAll(selection.rank(nextPopulation, sizePopulation - sizePopulation / 2));
+			System.out.println(nextPopulation.size());
+			System.out.println(sizePopulation - sizePopulation / 2);
+			
+			population.addAll(selection.tournament(nextPopulation, sizePopulation - sizePopulation / 2, false, 4));
+			
+			System.out.println(population.size());
 			registerLog();
-			chromosomeToExcel.converterChromosomeToExcel(population, i);
+			// chromosomeToExcel.converterChromosomeToExcel(population, i);
 
 		}
 
@@ -94,7 +101,7 @@ public class AG {
 
 	public static void main(String[] args) throws Exception {
 		// SIZE POPULATION, COUNT GENERATION
-		new AG(60, 50, "0");
+		new AG(20, 100, "0");
 
 		// for (int i = 0; i < 30; i++) {
 		// System.out.println("------------------ Repetição" + i +

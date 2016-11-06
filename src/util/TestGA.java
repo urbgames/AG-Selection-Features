@@ -1,5 +1,6 @@
 package util;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -18,8 +19,7 @@ import ag.Selection;
 
 public class TestGA {
 
-	public static void main(String[] args) throws Exception {
-		
+	public TestGA() {
 		// ArrayList<Integer> arrayList = new ArrayList<>();
 		// int value = 10000;
 		// arrayList.add(1);
@@ -109,10 +109,67 @@ public class TestGA {
 		// population.forEach(x -> System.out.println("Individuo: " + x.getID()
 		// + " - Fitness: " + x.getFitnessValue()));
 
+		// double[] array = new double[] { 10.11, 10.11, 10.11, 10, 9.99 };
+		// double[] arrayNormalize = MathUtil.normalize(array);
+		// for (double d : arrayNormalize) {
+		// System.out.println(d);
+		// }
+		//
+
+//		List<Integer> teste = new ArrayList<>();
+//		teste.add(5);
+//		teste.add(10);
+//		teste.add(0);
+//		teste.add(112);
+//		List<Integer> teste2 = new ArrayList<>(teste);
+//		teste2.remove(0);
+//		System.out.println(teste);
+
+	}
+
+	public double calcMin(double[] array) {
+		double[] array2 = array.clone();
+		Arrays.sort(array2);
+		return array2[0];
+	}
+
+	public double calcMax(double[] array) {
+		double[] array2 = array.clone();
+		Arrays.sort(array2);
+		return array2[array2.length - 1];
+	}
+
+	public double calcStd(double[] array) {
+		double mean = calcMean(array);
+		double std = 0;
+		for (double d : array) {
+			std += Math.sqrt(Math.pow(d - mean, 2));
+		}
+		if (array.length > 0) {
+			std = std / array.length;
+			return std;
+		} else
+			return 0;
+	}
+
+	public double calcMean(double[] array) {
+		double mean = 0;
+		for (double d : array) {
+			mean += d;
+		}
+		if (array.length > 0) {
+			mean = mean / array.length;
+			return mean;
+		} else
+			return 0;
 	}
 
 	protected static int geratorID(int IDGenarator) {
 		return ++IDGenarator;
 	}
 
+	public static void main(String[] args) throws Exception {
+
+		new TestGA();
+	}
 }
