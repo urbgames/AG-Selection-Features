@@ -94,7 +94,7 @@ public class AG {
 
 	public static void main(String[] args) throws Exception {
 		// SIZE POPULATION, COUNT GENERATION
-		new AG(60, 50, "0");
+		new AG(60, 100, "0");
 
 		// for (int i = 0; i < 30; i++) {
 		// System.out.println("------------------ Repetição" + i +
