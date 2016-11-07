@@ -7,6 +7,7 @@ import java.util.Random;
 
 import util.MathUtil;
 
+
 public class Selection {
 
 	// https://en.wikipedia.org/wiki/Fitness_proportionate_selection
