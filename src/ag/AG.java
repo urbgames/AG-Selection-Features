@@ -2,6 +2,7 @@ package ag;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import excelGenerator.ChromosomeToExcel;
@@ -23,7 +24,9 @@ public class AG {
 	private ChromosomeToExcel chromosomeToExcel;
 
 	private void registerLog() throws IOException {
-		for (ChromosomeBinary chromosome : population) {
+		List<ChromosomeBinary> chromosomeClone = new ArrayList<>(population);
+		Collections.sort(chromosomeClone, Collections.reverseOrder());
+		for (ChromosomeBinary chromosome : chromosomeClone) {
 			generatorFile.insertLog("Individuo: " + chromosome.getID());
 			generatorFile.insertLog("Fitness: " + chromosome.getFitnessValue());
 			generatorFile.insertLog(chromosome.toStringBinaryGenesNumbers());
@@ -60,11 +63,9 @@ public class AG {
 			// SELECTION PARENTS TO NEXT GENERATION
 			// VALUE RANGE BETWEEN 0.5 and 1
 			List<ChromosomeBinary> parents = new ArrayList<>();
-			parents.addAll(selection.rank(population, sizePopulation / 3));
-			System.out.println(population.size());
-			System.out.println(sizePopulation / 3);
-			parents.addAll(selection.rouletteSelectNormalized(population, 90, true));
-			
+			parents.addAll(selection.rank(population, 20, true));
+			parents.addAll(selection.rouletteSelectNormalized(population, 80, true));
+
 			// CROSSOVER
 			List<ChromosomeBinary> offspring = crossover.onePoint(parents, 1);
 
@@ -76,38 +77,34 @@ public class AG {
 
 			// SELECT POPULATION TO NEXT GENERATION
 			List<ChromosomeBinary> nextPopulation = new ArrayList<>();
-			nextPopulation.addAll(parents);
+			nextPopulation.addAll(population);
 			nextPopulation.addAll(offspring);
-			System.out.println(nextPopulation.size());
-			
+
 			population.clear();
-			population.addAll(selection.rank(nextPopulation, sizePopulation - sizePopulation / 2));
-			System.out.println(nextPopulation.size());
-			System.out.println(sizePopulation - sizePopulation / 2);
-			
-			population.addAll(selection.tournament(nextPopulation, sizePopulation - sizePopulation / 2, false, 4));
-			
-			System.out.println(population.size());
+			int percente = 30;
+			population.addAll(selection.rank(nextPopulation, percente * sizePopulation / 100, false));
+			population.addAll(
+					selection.tournament(nextPopulation, sizePopulation - percente * sizePopulation / 100, false, 4));
 			registerLog();
-			// chromosomeToExcel.converterChromosomeToExcel(population, i);
+//			 chromosomeToExcel.converterChromosomeToExcel(population, i);
 
 		}
 
 		generatorFile.closeLog();
-		chromosomeToExcel.closeFile();
+//		chromosomeToExcel.closeFile();
 		System.out.println("FINAL DA SELEÇÃO");
 
 	}
 
 	public static void main(String[] args) throws Exception {
 		// SIZE POPULATION, COUNT GENERATION
-		new AG(20, 100, "0");
+		new AG(50, 1000, "0");
 
-		// for (int i = 0; i < 30; i++) {
-		// System.out.println("------------------ Repetição" + i +
-		// "-------------------");
-		// new AG(60, 50, "" + (i + 1));
-		// }
+//		 for (int i = 0; i < 30; i++) {
+//		 System.out.println("------------------ Repetição" + i +
+//		 "-------------------");
+//		 new AG(50, 1000, "" + (i + 1));
+//		 }
 	}
 
 	protected int geratorID() {
