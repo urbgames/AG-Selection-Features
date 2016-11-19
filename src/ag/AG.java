@@ -82,7 +82,7 @@ public class AG {
 			population = selection.rank(nextPopulation, sizePopulation);
 
 			registerLog();
-			chromosomeToExcel.converterChromosomeToExcel(population, i);
+			chromosomeToExcel.converterChromosomeToExcelCollumn(population, i);
 
 		}
 
