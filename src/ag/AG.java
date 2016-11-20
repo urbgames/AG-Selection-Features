@@ -64,8 +64,8 @@ public class AG {
 			// SELECTION PARENTS TO NEXT GENERATION
 			// VALUE RANGE BETWEEN 0.5 and 1
 			List<ChromosomeBinary> parents = new ArrayList<>();
-			parents.addAll(selection.rank(population, 20, true));
-			parents.addAll(selection.rouletteSelectNormalized(population, 80, true));
+			parents.addAll(selection.rank(population, 1, false));
+			parents.addAll(selection.rouletteSelectNormalized(population, sizePopulation-1, false));
 
 			// CROSSOVER
 			List<ChromosomeBinary> offspring = crossover.onePoint(parents, 1);
