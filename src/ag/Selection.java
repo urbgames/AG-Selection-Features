@@ -48,8 +48,7 @@ public class Selection {
 		List<ChromosomeBinary> chromosomeClone = new ArrayList<>(chromosome);
 		List<ChromosomeBinary> chromosomeParent = new ArrayList<>();
 
-		int j=0;
-		while(j<size){
+		for (int j = 0; j < size; j++) {
 
 			double sumProportionalFitness = 0;
 			double[] proportionalFitness = new double[chromosomeClone.size()];
@@ -65,12 +64,10 @@ public class Selection {
 				valueRandom -= proportionalFitness[i];
 				if (valueRandom <= 0) {
 					chromosomeParent.add(chromosomeClone.remove(i));
-					j++;
 					break;
 				}
 			}
-			
-			System.out.println("rouletteSelectNormalized");
+
 		}
 
 		return chromosomeParent;
