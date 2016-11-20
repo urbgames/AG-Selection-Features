@@ -69,6 +69,8 @@ public class Selection {
 					break;
 				}
 			}
+			
+			System.out.println("rouletteSelectNormalized");
 		}
 
 		return chromosomeParent;

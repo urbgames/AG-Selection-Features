@@ -49,7 +49,8 @@ public class AG {
 			population.add(chromosome);
 		}
 
-		generatorFile = new GeneratorFile();
+		generatorFile = new GeneratorFile(order);
+		chromosomeToExcel.insertLabelRows();
 
 		for (int i = 0; i < countGeneration; i++) {
 			System.out.println("Geração: " + (i + 1));
@@ -85,26 +86,27 @@ public class AG {
 			population.addAll(selection.rank(nextPopulation, percente * sizePopulation / 100, false));
 			population.addAll(
 					selection.tournament(nextPopulation, sizePopulation - percente * sizePopulation / 100, false, 4));
+			
 			registerLog();
-//			 chromosomeToExcel.converterChromosomeToExcel(population, i);
+			 chromosomeToExcel.converterChromosomeToExcelRow(population, i);
 
 		}
 
 		generatorFile.closeLog();
-//		chromosomeToExcel.closeFile();
+		chromosomeToExcel.closeFile();
 		System.out.println("FINAL DA SELEÇÃO");
 
 	}
 
 	public static void main(String[] args) throws Exception {
 		// SIZE POPULATION, COUNT GENERATION
-		new AG(50, 1000, "0");
+//		new AG(1, 2, "0");
 
-//		 for (int i = 0; i < 30; i++) {
-//		 System.out.println("------------------ Repetição" + i +
-//		 "-------------------");
-//		 new AG(50, 1000, "" + (i + 1));
-//		 }
+		 for (int i = 0; i < 30; i++) {
+		 System.out.println("------------------ Repetição" + i +
+		 "-------------------");
+		 new AG(60, 1000, "" + (i + 1));
+		 }
 	}
 
 	protected int geratorID() {

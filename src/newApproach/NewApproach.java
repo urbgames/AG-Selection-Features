@@ -24,7 +24,7 @@ public class NewApproach {
 		this.factoryChromosome = FactoryChromosome.getInstance();
 		this.fitness = new Fitness();
 		this.evolution = new Evolution();
-		this.generatorFile = new GeneratorFile();
+		this.generatorFile = new GeneratorFile("0");
 
 		for (int i = 0; i < sizePopulation; i++) {
 			ChromosomeBinary chromosome = factoryChromosome.factoryChromosome();

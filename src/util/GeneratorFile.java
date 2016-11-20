@@ -10,9 +10,9 @@ public class GeneratorFile {
 	private File file;
 	private FileWriter fileWritter;
 
-	public GeneratorFile() throws IOException {
+	public GeneratorFile(String order) throws IOException {
 
-		this.file = new File("D:/GA_SELECTION_BASE.txt");
+		this.file = new File("D:/GA_SELECTION_BASE" + order + ".txt");
 		new PrintWriter(this.file).close();
 		fileWritter = new FileWriter(this.file, true);
 
