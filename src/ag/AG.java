@@ -46,7 +46,7 @@ public class AG {
 			population.add(chromosome);
 		}
 
-		generatorFile = new GeneratorFile();
+		generatorFile = new GeneratorFile(order);
 		chromosomeToExcel.insertLabelRows();
 
 		for (int i = 0; i < countGeneration; i++) {
@@ -95,13 +95,13 @@ public class AG {
 
 	public static void main(String[] args) throws Exception {
 		// SIZE POPULATION, COUNT GENERATION
-		new AG(50, 1000, "0");
+//		new AG(50, 1000, "0");
 
-		// for (int i = 0; i < 30; i++) {
-		// System.out.println("------------------ Repetição" + i +
-		// "-------------------");
-		// new AG(60, 50, "" + (i + 1));
-		// }
+		 for (int i = 0; i < 30; i++) {
+		 System.out.println("------------------ Repetição" + i +
+		 "-------------------");
+		 new AG(60, 1000, "" + (i + 1));
+		 }
 	}
 
 	protected int geratorID() {
