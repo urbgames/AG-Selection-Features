@@ -82,10 +82,9 @@ public class AG {
 			nextPopulation.addAll(offspring);
 
 			population.clear();
-			int percente = 30;
-			population.addAll(selection.rank(nextPopulation, percente * sizePopulation / 100, false));
+			population.addAll(selection.rank(nextPopulation, 1, false));
 			population.addAll(
-					selection.tournament(nextPopulation, sizePopulation - percente * sizePopulation / 100, false, 4));
+					selection.tournament(nextPopulation, sizePopulation - 1, false, 4));
 			
 			registerLog();
 			 chromosomeToExcel.converterChromosomeToExcelRow(population, i);
