@@ -6,10 +6,10 @@ import java.util.Random;
 public class Mutation {
 
 	// MUTATING ALL GENES (RANDOM)
-	public void mutationBinaryAllGenes(List<ChromosomeBinary> chromosomes) {
+	public void mutationBinaryAllGenes(List<ChromosomeBinary> chromosomes, double percent) {
 		for (int i = 0; i < chromosomes.size(); i++) {
 			for (int j = 0; j < chromosomes.get(i).getBinaryGenes().length; j++) {
-				if (Math.random() <= 0.5 ? true : false)
+				if (Math.random() <= percent ? true : false)
 					chromosomes.get(i).inverterGene(j);
 			}
 		}

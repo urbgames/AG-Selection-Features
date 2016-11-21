@@ -72,7 +72,7 @@ public class AG {
 			List<ChromosomeBinary> offspring = crossover.onePoint(parents, 1);
 
 			// MUTATION
-			mutation.mutationBinaryConstanteNumber(offspring, 7);
+			mutation.mutationBinaryAllGenes(offspring, 0.1);
 
 			// EVALUATION FITNESS TO OFFSPRING
 			fitness.fitnessGeneratorClassificator(offspring);
