@@ -59,13 +59,14 @@ public class AG {
 					.insertLog("----------------------------Generação: (" + (i + 1) + ") --------------------------");
 			//
 			// EVALUATION FITNESS TO PARENTS
-			fitness.fitnessGeneratorClassificator(population);
+			if (i == 0)
+				fitness.fitnessGeneratorClassificator(population);
 
 			// SELECTION PARENTS TO NEXT GENERATION
 			// VALUE RANGE BETWEEN 0.5 and 1
 			List<ChromosomeBinary> parents = new ArrayList<>();
 			parents.addAll(selection.rank(population, 1, false));
-			parents.addAll(selection.rouletteSelectNormalized(population, sizePopulation-1, false));
+			parents.addAll(selection.rouletteSelectNormalized(population, sizePopulation - 1, false));
 
 			// CROSSOVER
 			List<ChromosomeBinary> offspring = crossover.onePoint(parents, 1);
@@ -83,11 +84,10 @@ public class AG {
 
 			population.clear();
 			population.addAll(selection.rank(nextPopulation, 1, false));
-			population.addAll(
-					selection.tournament(nextPopulation, sizePopulation - 1, false, 4));
-			
+			population.addAll(selection.tournament(nextPopulation, sizePopulation - 1, false, 4));
+
 			registerLog();
-			 chromosomeToExcel.converterChromosomeToExcelRow(population, i);
+			chromosomeToExcel.converterChromosomeToExcelRow(population, i);
 
 		}
 
@@ -99,13 +99,12 @@ public class AG {
 
 	public static void main(String[] args) throws Exception {
 		// SIZE POPULATION, COUNT GENERATION
-//		new AG(1, 2, "0");
+		// new AG(1, 2, "0");
 
-		 for (int i = 0; i < 30; i++) {
-		 System.out.println("------------------ Repetição" + i +
-		 "-------------------");
-		 new AG(60, 1000, "" + (i + 1));
-		 }
+		for (int i = 4; i < 30; i++) {
+			System.out.println("------------------ Repetição" + i + "-------------------");
+			new AG(60, 1000, "" + (i + 1));
+		}
 	}
 
 	protected int geratorID() {
