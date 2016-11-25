@@ -20,12 +20,13 @@ public class AG {
 	private Crossover crossover;
 	private Mutation mutation;
 	private FactoryChromosome factoryChromosome;
-	private GeneratorFile generatorFile;
-	private ChromosomeToExcel chromosomeToExcel;
+	private GeneratorFile generatorFile, generatorFileParentsAfterCrossAndMutation;
+	private ChromosomeToExcel chromosomeToExcel, chromosomeToExcelParentsAfterCrossAndMutation;
 
-	private void registerLog() throws IOException {
-		List<ChromosomeBinary> chromosomeClone = new ArrayList<>(population);
+	private void registerLog(GeneratorFile generatorFile, List<ChromosomeBinary> chromosomes) throws IOException {
+		List<ChromosomeBinary> chromosomeClone = new ArrayList<>(chromosomes);
 		Collections.sort(chromosomeClone, Collections.reverseOrder());
+
 		for (ChromosomeBinary chromosome : chromosomeClone) {
 			generatorFile.insertLog("Individuo: " + chromosome.getID());
 			generatorFile.insertLog("Fitness: " + chromosome.getFitnessValue());
@@ -36,6 +37,7 @@ public class AG {
 
 	public AG(int sizePopulation, int countGeneration, String order) throws Exception {
 		this.chromosomeToExcel = new ChromosomeToExcel(order);
+		this.chromosomeToExcelParentsAfterCrossAndMutation = new ChromosomeToExcel("After" + order);
 		this.selection = new Selection();
 		this.fitness = new Fitness();
 		this.crossover = new Crossover();
@@ -50,13 +52,17 @@ public class AG {
 		}
 
 		generatorFile = new GeneratorFile(order);
+		generatorFileParentsAfterCrossAndMutation = new GeneratorFile("After" + order);
 		chromosomeToExcel.insertLabelRows();
 
 		for (int i = 0; i < countGeneration; i++) {
 			System.out.println("Geração: " + (i + 1));
 
-			generatorFile
-					.insertLog("----------------------------Generação: (" + (i + 1) + ") --------------------------");
+			String labelGeneration = "----------------------------Generação: (" + (i + 1)
+					+ ") --------------------------";
+
+			generatorFile.insertLog(labelGeneration);
+			generatorFileParentsAfterCrossAndMutation.insertLog(labelGeneration);
 			//
 			// EVALUATION FITNESS TO PARENTS
 			if (i == 0)
@@ -65,8 +71,11 @@ public class AG {
 			// SELECTION PARENTS TO NEXT GENERATION
 			// VALUE RANGE BETWEEN 0.5 and 1
 			List<ChromosomeBinary> parents = new ArrayList<>();
-			parents.addAll(selection.rank(population, 1, false));
-			parents.addAll(selection.rouletteSelectNormalized(population, sizePopulation - 1, false));
+			// parents.addAll(selection.rank(population, 1, false));
+			parents.addAll(selection.rouletteSelectNormalized(population, sizePopulation, false));
+
+			registerLog(this.generatorFileParentsAfterCrossAndMutation, parents);
+			chromosomeToExcelParentsAfterCrossAndMutation.converterChromosomeToExcelRow(parents, i);
 
 			// CROSSOVER
 			List<ChromosomeBinary> offspring = crossover.onePoint(parents, 1);
@@ -84,15 +93,18 @@ public class AG {
 
 			population.clear();
 			population.addAll(selection.rank(nextPopulation, 1, false));
-			population.addAll(selection.tournament(nextPopulation, sizePopulation - 1, false, 4));
+			population.addAll(selection.tournament(nextPopulation, sizePopulation - 1, false, 2));
 
-			registerLog();
+			registerLog(this.generatorFile, this.population);
 			chromosomeToExcel.converterChromosomeToExcelRow(population, i);
 
 		}
 
 		generatorFile.closeLog();
+		generatorFileParentsAfterCrossAndMutation.closeLog();
 		chromosomeToExcel.closeFile();
+		chromosomeToExcelParentsAfterCrossAndMutation.closeFile();
+
 		System.out.println("FINAL DA SELEÇÃO");
 
 	}
