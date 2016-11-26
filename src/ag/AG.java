@@ -54,6 +54,7 @@ public class AG {
 		generatorFile = new GeneratorFile(order);
 		generatorFileParentsAfterCrossAndMutation = new GeneratorFile("After" + order);
 		chromosomeToExcel.insertLabelRows();
+		chromosomeToExcelParentsAfterCrossAndMutation.insertLabelRows();
 
 		for (int i = 0; i < countGeneration; i++) {
 			System.out.println("Geração: " + (i + 1));

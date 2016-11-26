@@ -116,14 +116,16 @@ public class TestGA {
 		// }
 		//
 
-//		List<Integer> teste = new ArrayList<>();
-//		teste.add(5);
-//		teste.add(10);
-//		teste.add(0);
-//		teste.add(112);
+		List<Integer> teste = new ArrayList<>();
+		teste.add(5);
+		teste.add(10);
+		teste.add(0);
+		teste.add(112);
 //		List<Integer> teste2 = new ArrayList<>(teste);
 //		teste2.remove(0);
-//		System.out.println(teste);
+		
+		Collections.shuffle(teste);
+		System.out.println(teste.get(0));
 
 	}
 
