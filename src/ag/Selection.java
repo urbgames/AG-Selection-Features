@@ -51,6 +51,7 @@ public class Selection {
 		for (int j = 0; j < size; j++) {
 
 			double sumProportionalFitness = 0;
+			Collections.shuffle(chromosomeClone);
 			double[] proportionalFitness = new double[chromosomeClone.size()];
 
 			for (int i = 0; i < chromosomeClone.size(); i++) {
