@@ -21,7 +21,7 @@ public class AG {
 	private Mutation mutation;
 	private FactoryChromosome factoryChromosome;
 	private GeneratorFile generatorFile, generatorFileParentsAfterCrossAndMutation;
-	private ChromosomeToExcel chromosomeToExcel, chromosomeToExcelParentsAfterCrossAndMutation;
+	private ChromosomeToExcel chromosomeToExcel, chromosomeToExcelParentsAfterCrossAndMutation, chromosomeToExcelOffspringBeforeCrossAndMutation;
 
 	private void registerLog(GeneratorFile generatorFile, List<ChromosomeBinary> chromosomes) throws IOException {
 		List<ChromosomeBinary> chromosomeClone = new ArrayList<>(chromosomes);
@@ -38,6 +38,7 @@ public class AG {
 	public AG(int sizePopulation, int countGeneration, String order) throws Exception {
 		this.chromosomeToExcel = new ChromosomeToExcel(order);
 		this.chromosomeToExcelParentsAfterCrossAndMutation = new ChromosomeToExcel("After" + order);
+		this.chromosomeToExcelOffspringBeforeCrossAndMutation = new ChromosomeToExcel("Before" + order);
 		this.selection = new Selection();
 		this.fitness = new Fitness();
 		this.crossover = new Crossover();
@@ -55,6 +56,7 @@ public class AG {
 		generatorFileParentsAfterCrossAndMutation = new GeneratorFile("After" + order);
 		chromosomeToExcel.insertLabelRows();
 		chromosomeToExcelParentsAfterCrossAndMutation.insertLabelRows();
+		chromosomeToExcelOffspringBeforeCrossAndMutation.insertLabelRows();
 
 		for (int i = 0; i < countGeneration; i++) {
 			System.out.println("Geração: " + (i + 1));
@@ -87,6 +89,9 @@ public class AG {
 			// EVALUATION FITNESS TO OFFSPRING
 			fitness.fitnessGeneratorClassificator(offspring);
 
+
+			chromosomeToExcelOffspringBeforeCrossAndMutation.converterChromosomeToExcelRow(offspring, i);
+			
 			// SELECT POPULATION TO NEXT GENERATION
 			List<ChromosomeBinary> nextPopulation = new ArrayList<>();
 			nextPopulation.addAll(population);
@@ -105,6 +110,7 @@ public class AG {
 		generatorFileParentsAfterCrossAndMutation.closeLog();
 		chromosomeToExcel.closeFile();
 		chromosomeToExcelParentsAfterCrossAndMutation.closeFile();
+		chromosomeToExcelOffspringBeforeCrossAndMutation.closeFile();
 
 		System.out.println("FINAL DA SELEÇÃO");
 
