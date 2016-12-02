@@ -9,6 +9,7 @@ import weka.core.converters.ConverterUtils.DataSource;
 import weka.filters.Filter;
 import weka.filters.unsupervised.attribute.Remove;
 import weka.filters.unsupervised.instance.RemovePercentage;
+import weka.gui.beans.CrossValidationFoldMaker;
 
 public final class Classification {
 
