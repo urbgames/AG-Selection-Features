@@ -96,7 +96,7 @@ public class AG {
 
 			population.clear();
 			population.addAll(selection.rank(nextPopulation, 1, false));
-			population.addAll(selection.tournament(nextPopulation, sizePopulation - 1, false, 2));
+			population.addAll(selection.tournament(nextPopulation, sizePopulation - 1, false, 4));
 
 			registerLog(this.generatorFile, this.population);
 			chromosomeToExcel.converterChromosomeToExcelRow(population, i);
