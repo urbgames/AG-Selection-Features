@@ -120,9 +120,9 @@ public class AG {
 		// SIZE POPULATION, COUNT GENERATION
 		// new AG(1, 2, "0");
 
-		for (int i = 0; i < 30; i++) {
+		for (int i = 0; i < 1; i++) {
 			System.out.println("------------------ Repetição" + i + "-------------------");
-			new AG(60, 1000, "" + (i + 1));
+			new AG(20, 10, "" + (i + 1));
 		}
 	}
 
