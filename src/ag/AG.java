@@ -6,7 +6,6 @@ import java.util.Collections;
 import java.util.List;
 
 import excelGenerator.ChromosomeToExcel;
-import excelGenerator.ExcelGenerator;
 import util.GeneratorFile;
 
 public class AG {
@@ -21,7 +20,8 @@ public class AG {
 	private Mutation mutation;
 	private FactoryChromosome factoryChromosome;
 	private GeneratorFile generatorFile, generatorFileParentsAfterCrossAndMutation;
-	private ChromosomeToExcel chromosomeToExcel, chromosomeToExcelParentsAfterCrossAndMutation, chromosomeToExcelOffspringBeforeCrossAndMutation;
+	private ChromosomeToExcel chromosomeToExcel, chromosomeToExcelParentsAfterCrossAndMutation,
+			chromosomeToExcelOffspringBeforeCrossAndMutation;
 
 	private void registerLog(GeneratorFile generatorFile, List<ChromosomeBinary> chromosomes) throws IOException {
 		List<ChromosomeBinary> chromosomeClone = new ArrayList<>(chromosomes);
@@ -71,17 +71,15 @@ public class AG {
 			if (i == 0)
 				fitness.fitnessGeneratorClassificator(population);
 
-			// SELECTION PARENTS TO NEXT GENERATION
-			// VALUE RANGE BETWEEN 0.5 and 1
+			// SELECTION PARENTS
 			List<ChromosomeBinary> parents = new ArrayList<>();
-			// parents.addAll(selection.rank(population, 1, false));
 			parents.addAll(selection.rouletteSelectNormalized(population, sizePopulation, false));
-
+			
 			registerLog(this.generatorFileParentsAfterCrossAndMutation, parents);
 			chromosomeToExcelParentsAfterCrossAndMutation.converterChromosomeToExcelRow(parents, i);
 
 			// CROSSOVER
-			List<ChromosomeBinary> offspring = crossover.onePoint(parents, 1);
+			List<ChromosomeBinary> offspring = crossover.onePoint(parents, 5);
 
 			// MUTATION
 			mutation.mutationBinaryAllGenes(offspring, 0.1);
@@ -89,9 +87,8 @@ public class AG {
 			// EVALUATION FITNESS TO OFFSPRING
 			fitness.fitnessGeneratorClassificator(offspring);
 
-
 			chromosomeToExcelOffspringBeforeCrossAndMutation.converterChromosomeToExcelRow(offspring, i);
-			
+
 			// SELECT POPULATION TO NEXT GENERATION
 			List<ChromosomeBinary> nextPopulation = new ArrayList<>();
 			nextPopulation.addAll(population);
@@ -120,9 +117,9 @@ public class AG {
 		// SIZE POPULATION, COUNT GENERATION
 		// new AG(1, 2, "0");
 
-		for (int i = 0; i < 1; i++) {
+		for (int i = 0; i < 30; i++) {
 			System.out.println("------------------ Repetição" + i + "-------------------");
-			new AG(20, 10, "" + (i + 1));
+			new AG(60, 1000, "" + (i + 1));
 		}
 	}
 

@@ -75,23 +75,20 @@ public final class Classification {
 
 //		RemovePercentage percentageData = new RemovePercentage();
 //		percentageData.setInputFormat(data);
-
-		// percentageData.setOptions(Utils.splitOptions("-P 10"));
-		// Instances dataTrain = Filter.useFilter(data, percentageData);
-		//
-		// percentageData.setOptions(Utils.splitOptions("-V -P 10"));
-		// Instances dataTest = Filter.useFilter(data, percentageData);
-
+//
 //		percentageData.setOptions(Utils.splitOptions("-P 90"));
 //		Instances dataTest = Filter.useFilter(data, percentageData);
 //
 //		percentageData.setOptions(Utils.splitOptions("-V -P 90"));
 //		Instances dataTrain = Filter.useFilter(data, percentageData);
-
+//
 //		classifier.buildClassifier(dataTrain);
+//		Evaluation eval = new Evaluation(dataTrain);
+//		eval.evaluateModel(classifier, dataTest);
+//		
+		
 		Evaluation eval = new Evaluation(data);
 		eval.crossValidateModel(classifier, data, 10, new java.util.Random(1));
-
 		return (float) eval.pctCorrect();
 
 	}

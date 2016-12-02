@@ -1,6 +1,7 @@
 package ag;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Crossover {
@@ -10,6 +11,8 @@ public class Crossover {
 	public List<ChromosomeBinary> onePoint(List<ChromosomeBinary> parents, int point) throws Exception {
 		this.factoryChromosome = FactoryChromosome.getInstance();
 		List<ChromosomeBinary> offspring = new ArrayList<>();
+		
+		Collections.shuffle(parents);
 		
 		for (int i = 1; i < parents.size(); i += 2) {
 
