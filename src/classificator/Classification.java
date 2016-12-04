@@ -1,8 +1,9 @@
 package classificator;
 
+import java.util.Random;
+
 import weka.classifiers.Evaluation;
 import weka.classifiers.bayes.BayesNet;
-import weka.core.Debug.Random;
 import weka.core.Instances;
 import weka.core.Utils;
 import weka.core.converters.ConverterUtils.DataSource;
@@ -14,8 +15,9 @@ public final class Classification {
 
 	private String base1 = "C:\\Users\\Urbgames\\\\Documents\\VECTOR - ALL.arff";
 	private String base2 = "C:\\Users\\Urbgames\\Documents\\keystroke_normalized_1.arff";
+	private String base3 = "C:\\Users\\Urbgames\\Documents\\keystroke_71features.arff";
 	private static Instances dataAll = null;
-	private String baseCurrent = base2;
+	private String baseCurrent = base3;
 
 	private static volatile Classification classification;
 
@@ -49,6 +51,16 @@ public final class Classification {
 			}
 		}
 
+		String arrayString = "";
+		for (int i = 0; i < binaryGenes.length; i++) {
+			arrayString += binaryGenes[i] ? 1 : 0;
+			if (i + 1 != binaryGenes.length) {
+				arrayString += ",";
+			}
+		}
+
+		// System.out.println(arrayString);
+
 		if (count != 0)
 			optionsRemove = optionsRemove.substring(0, optionsRemove.length() - 1);
 
@@ -72,24 +84,21 @@ public final class Classification {
 		if (data.classIndex() == -1)
 			data.setClassIndex(data.numAttributes() - 1);
 
-		RemovePercentage percentageData = new RemovePercentage();
-		percentageData.setInputFormat(data);
-
-		// percentageData.setOptions(Utils.splitOptions("-P 10"));
+		// RemovePercentage percentageData = new RemovePercentage();
+		// percentageData.setInputFormat(data);
+		//
+		// percentageData.setOptions(Utils.splitOptions("-P 90"));
+		// Instances dataTest = Filter.useFilter(data, percentageData);
+		//
+		// percentageData.setOptions(Utils.splitOptions("-V -P 90"));
 		// Instances dataTrain = Filter.useFilter(data, percentageData);
 		//
-		// percentageData.setOptions(Utils.splitOptions("-V -P 10"));
-		// Instances dataTest = Filter.useFilter(data, percentageData);
+		// classifier.buildClassifier(dataTrain);
+		// Evaluation eval = new Evaluation(dataTrain);
+		// eval.evaluateModel(classifier, dataTest);
 
-		percentageData.setOptions(Utils.splitOptions("-P 90"));
-		Instances dataTest = Filter.useFilter(data, percentageData);
-
-		percentageData.setOptions(Utils.splitOptions("-V -P 90"));
-		Instances dataTrain = Filter.useFilter(data, percentageData);
-
-		classifier.buildClassifier(dataTrain);
-		Evaluation eval = new Evaluation(dataTrain);
-		eval.evaluateModel(classifier, dataTest);
+		Evaluation eval = new Evaluation(data);
+		eval.crossValidateModel(classifier, data, 10, new Random(1));
 
 		return (float) eval.pctCorrect();
 
@@ -98,8 +107,8 @@ public final class Classification {
 	public Classification() throws Exception {
 		if (dataAll == null) {
 			dataAll = new DataSource(baseCurrent).getDataSet();
-			Random rand = new Random();
-			dataAll.randomize(rand);
+			// Random rand = new Random();
+//			dataAll.randomize(new Random());
 		}
 	}
 

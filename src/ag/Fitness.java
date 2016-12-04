@@ -26,7 +26,9 @@ public class Fitness {
 		printStatus();
 		classification = Classification.getInstance();
 		for (int i = 0; i < chromosomes.size(); i++) {
+//			System.out.println(chromosomes.get(i).getID());
 			chromosomes.get(i).setFitnessValue(classification.getFitnessClafissation(chromosomes.get(i).getBinaryGenes()));
+//			System.out.println();
 		}
 	}
 
