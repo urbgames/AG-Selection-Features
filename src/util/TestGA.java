@@ -127,6 +127,9 @@ public class TestGA {
 		Collections.shuffle(teste);
 		System.out.println(teste.get(0));
 
+		double w = 0.5;
+				System.out.println(w);
+		
 	}
 
 	public double calcMin(double[] array) {

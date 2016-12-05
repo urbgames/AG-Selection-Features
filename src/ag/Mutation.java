@@ -14,6 +14,14 @@ public class Mutation {
 			}
 		}
 	}
+	
+	// MUTATING ALL GENES (RANDOM)
+		public void mutationBinaryAllGenes(ChromosomeBinary chromosomes, double percent) {
+				for (int j = 0; j < chromosomes.getBinaryGenes().length; j++) {
+					if (Math.random() <= percent ? true : false)
+						chromosomes.inverterGene(j);
+				}
+		}
 
 	// MUTATING A CONSTANTE NUMBER OF THE GENES (DEFINIED BY J)
 	public void mutationBinaryConstanteNumber(List<ChromosomeBinary> chromosomes, int countGenesMutation) {

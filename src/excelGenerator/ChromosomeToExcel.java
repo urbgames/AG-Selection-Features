@@ -25,15 +25,19 @@ public class ChromosomeToExcel {
 
 	public void converterChromosomeToExcelRow(List<ChromosomeBinary> chromosomes, int generation) {
 
-		double[] genes = new double[chromosomes.size()];
-		for (int i = 0; i < chromosomes.size(); i++) {
-			genes[i] = chromosomes.get(i).getFitnessValue();
+		try {
+			double[] genes = new double[chromosomes.size()];
+			for (int i = 0; i < chromosomes.size(); i++) {
+				genes[i] = chromosomes.get(i).getFitnessValue();
+			}
+			excelGenerator.insertCellInfo(generation + 1, 0, "" + generation, Cell.CELL_TYPE_STRING);
+			excelGenerator.insertCellInfo(generation + 1, 1, "" + MathUtil.calcMax(genes), Cell.CELL_TYPE_NUMERIC);
+			excelGenerator.insertCellInfo(generation + 1, 2, "" + MathUtil.calcMin(genes), Cell.CELL_TYPE_NUMERIC);
+			excelGenerator.insertCellInfo(generation + 1, 3, "" + MathUtil.calcMean(genes), Cell.CELL_TYPE_NUMERIC);
+			excelGenerator.insertCellInfo(generation + 1, 4, "" + MathUtil.calcStd(genes), Cell.CELL_TYPE_NUMERIC);
+		} catch (Exception e) {
+			System.out.println("erro");
 		}
-		excelGenerator.insertCellInfo(generation + 1, 0, "" + generation, Cell.CELL_TYPE_STRING);
-		excelGenerator.insertCellInfo(generation + 1, 1, "" + MathUtil.calcMax(genes), Cell.CELL_TYPE_NUMERIC);
-		excelGenerator.insertCellInfo(generation + 1, 2, "" + MathUtil.calcMin(genes), Cell.CELL_TYPE_NUMERIC);
-		excelGenerator.insertCellInfo(generation + 1, 3, "" + MathUtil.calcMean(genes), Cell.CELL_TYPE_NUMERIC);
-		excelGenerator.insertCellInfo(generation + 1, 4, "" + MathUtil.calcStd(genes), Cell.CELL_TYPE_NUMERIC);
 	}
 
 	public void converterChromosomeToExcelCollumn(List<ChromosomeBinary> chromosomes, int generation) {

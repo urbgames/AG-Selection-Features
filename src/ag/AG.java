@@ -2,11 +2,15 @@ package ag;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import javax.rmi.CORBA.Util;
+
 import excelGenerator.ChromosomeToExcel;
 import util.GeneratorFile;
+import util.MathUtil;
 
 public class AG {
 
@@ -83,15 +87,36 @@ public class AG {
 			registerLog(this.generatorFileParentsAfterCrossAndMutation, parents);
 			chromosomeToExcelParentsAfterCrossAndMutation.converterChromosomeToExcelRow(parents, i);
 
+			System.out.println(parents.size());
+			
 			// CROSSOVER
 			List<ChromosomeBinary> offspring = crossover.onePoint(parents, 10);
 
+			System.out.println(offspring.size());
+			fitness.fitnessGeneratorClassificator(offspring);
+
+			// Data to support calc rate mutation
+			List<ChromosomeBinary> offSpringTemp = new ArrayList<>(offspring);
+			Collections.sort(offSpringTemp, Collections.reverseOrder());
+			double maxFitness = offSpringTemp.get(0).getFitnessValue();
+			double[] allFitness = new double[offSpringTemp.size()];
+			for (int j = 0; j < offSpringTemp.size(); j++) {
+				allFitness[j] = offSpringTemp.get(j).getFitnessValue();
+			}
+			double avgFitness = MathUtil.calcMean(allFitness);
+
 			// MUTATION
-			mutation.mutationBinaryAllGenes(offspring, 0.1);
+			for (int j = 0; j < offspring.size(); j++) {
+				ChromosomeBinary f = offspring.get(j);
+				double rateMutation = 0.5 * (maxFitness - f.getFitnessValue()) / (maxFitness - avgFitness);
+				if (f.getFitnessValue() < avgFitness)
+					rateMutation = 0.5;
+				mutation.mutationBinaryAllGenes(f, rateMutation);
+			}
 
 			// EVALUATION FITNESS TO OFFSPRING
 			fitness.fitnessGeneratorClassificator(offspring);
-			registerLog(generatorFileOffspringBeforeCrossAndMutation,offspring);
+			registerLog(generatorFileOffspringBeforeCrossAndMutation, offspring);
 
 			chromosomeToExcelOffspringBeforeCrossAndMutation.converterChromosomeToExcelRow(offspring, i);
 
@@ -112,7 +137,7 @@ public class AG {
 		generatorFile.closeLog();
 		generatorFileParentsAfterCrossAndMutation.closeLog();
 		generatorFileOffspringBeforeCrossAndMutation.closeLog();
-		
+
 		chromosomeToExcel.closeFile();
 		chromosomeToExcelParentsAfterCrossAndMutation.closeFile();
 		chromosomeToExcelOffspringBeforeCrossAndMutation.closeFile();
@@ -127,7 +152,7 @@ public class AG {
 
 		for (int i = 0; i < 30; i++) {
 			System.out.println("------------------ Repetição" + i + "-------------------");
-			new AG(60, 1000, "" + (i + 1));
+			new AG(10, 1000, "" + (i + 1));
 		}
 	}
 
