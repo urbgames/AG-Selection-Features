@@ -86,17 +86,17 @@ public class Selection {
 			size = (int) (chromosome.size() * (size / 100.0f));
 		}
 
-		List<ChromosomeBinary> chromosomeClone = new ArrayList<>(chromosome);
+//		List<ChromosomeBinary> chromosomeClone = new ArrayList<>(chromosome);
 
 		List<ChromosomeBinary> selectionChromosomes = new ArrayList<>();
-		Collections.sort(chromosomeClone, Collections.reverseOrder());
+		Collections.sort(chromosome, Collections.reverseOrder());
 
-		if (size > chromosomeClone.size()) {
+		if (size > chromosome.size()) {
 			throw new IndexOutOfBoundsException("O tamanho do Selection Rank é superior à quantidade de cromossomos.");
 		}
 
 		for (int i = 0; i < size; i++) {
-			selectionChromosomes.add(chromosomeClone.remove(0));
+			selectionChromosomes.add(chromosome.remove(0));
 		}
 
 		return selectionChromosomes;

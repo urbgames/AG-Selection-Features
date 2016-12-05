@@ -92,9 +92,9 @@ public class AG {
 			
 			// MUTATION
 			mutation.mutationBinaryAllGenes(offspring, 0.2);
-
+//
 //			fitness.fitnessGeneratorClassificator(offspring);
-
+//
 //			// Data to support calc rate mutation
 //			List<ChromosomeBinary> offSpringTemp = new ArrayList<>(offspring);
 //			Collections.sort(offSpringTemp, Collections.reverseOrder());
@@ -117,6 +117,8 @@ public class AG {
 			// EVALUATION FITNESS TO OFFSPRING
 			fitness.fitnessGeneratorClassificator(offspring);
 			registerLog(generatorFileOffspringBeforeCrossAndMutation, offspring);
+			
+			population.forEach(x->System.out.println(x.getFitnessValue()));
 
 			chromosomeToExcelOffspringBeforeCrossAndMutation.converterChromosomeToExcelRow(offspring, i);
 
@@ -129,6 +131,8 @@ public class AG {
 			population.addAll(selection.rank(nextPopulation, 1, false));
 			population.addAll(selection.tournament(nextPopulation, sizePopulation - 1, false, 2));
 
+			population.forEach(x->System.out.println(x.getFitnessValue()));
+			
 			registerLog(this.generatorFile, this.population);
 			chromosomeToExcel.converterChromosomeToExcelRow(population, i);
 
@@ -152,7 +156,7 @@ public class AG {
 
 		for (int i = 0; i < 30; i++) {
 			System.out.println("------------------ Repetição" + i + "-------------------");
-			new AG(60, 1000, "" + (i + 1));
+			new AG(10, 1000, "" + (i + 1));
 		}
 	}
 
