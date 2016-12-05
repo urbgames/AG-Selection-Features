@@ -56,10 +56,15 @@ public class Selection {
 
 			for (int i = 0; i < chromosomeClone.size(); i++) {
 				proportionalFitness[i] = chromosomeClone.get(i).getFitnessValue();
-				sumProportionalFitness += chromosomeClone.get(i).getFitnessValue();
+				
 			}
 
 			proportionalFitness = MathUtil.normalize(proportionalFitness);
+			
+			for (int i = 0; i < proportionalFitness.length; i++) {
+				sumProportionalFitness += proportionalFitness[i];
+			}
+			
 			double valueRandom = new Random().nextDouble() * sumProportionalFitness;
 			for (int i = 0; i < chromosomeClone.size(); i++) {
 				valueRandom -= proportionalFitness[i];
