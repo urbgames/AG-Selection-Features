@@ -69,7 +69,7 @@ public class Selection {
 			for (int i = 0; i < chromosomeClone.size(); i++) {
 				valueRandom -= proportionalFitness[i];
 				if (valueRandom <= 0) {
-					chromosomeParent.add(chromosomeClone.remove(i));
+					chromosomeParent.add(chromosomeClone.get(i));
 					break;
 				}
 			}
