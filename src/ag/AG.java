@@ -89,8 +89,11 @@ public class AG {
 			
 			// CROSSOVER
 			List<ChromosomeBinary> offspring = crossover.onePoint(parents, 10);
+			
+			// MUTATION
+			mutation.mutationBinaryAllGenes(offspring, 0.2);
 
-			fitness.fitnessGeneratorClassificator(offspring);
+//			fitness.fitnessGeneratorClassificator(offspring);
 
 //			// Data to support calc rate mutation
 //			List<ChromosomeBinary> offSpringTemp = new ArrayList<>(offspring);
@@ -110,8 +113,6 @@ public class AG {
 //					rateMutation = 0.5;
 //				mutation.mutationBinaryAllGenes(f, rateMutation);
 //			}
-
-			mutation.mutationBinaryAllGenes(offspring, 0.2);
 			
 			// EVALUATION FITNESS TO OFFSPRING
 			fitness.fitnessGeneratorClassificator(offspring);
