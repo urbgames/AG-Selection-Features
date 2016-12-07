@@ -105,8 +105,7 @@ public final class Classification {
 	public Classification() throws Exception {
 		if (dataAll == null) {
 			dataAll = new DataSource(baseCurrent).getDataSet();
-//			 Random rand = new Random();
-//			dataAll.randomize(new Random());
+			dataAll.randomize(new Random());
 		}
 	}
 
