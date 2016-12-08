@@ -113,7 +113,6 @@ public final class Classification {
 			arffSaver.setInstances(dataAll);
 			File file = new File("D:/_Experimentos14/dataAll.arff");
 			arffSaver.setFile(file);
-			arffSaver.setDestination(file);
 			arffSaver.writeBatch();
 			
 		}
