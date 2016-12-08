@@ -1,11 +1,13 @@
 package classificator;
 
+import java.io.File;
 import java.util.Random;
 
 import weka.classifiers.Evaluation;
 import weka.classifiers.bayes.BayesNet;
 import weka.core.Instances;
 import weka.core.Utils;
+import weka.core.converters.ArffSaver;
 import weka.core.converters.ConverterUtils.DataSource;
 import weka.filters.Filter;
 import weka.filters.unsupervised.attribute.Remove;
@@ -106,6 +108,14 @@ public final class Classification {
 		if (dataAll == null) {
 			dataAll = new DataSource(baseCurrent).getDataSet();
 			dataAll.randomize(new Random());
+
+			ArffSaver arffSaver = new ArffSaver();
+			arffSaver.setInstances(dataAll);
+			File file = new File("D:/_Experimentos14/dataAll.arff");
+			arffSaver.setFile(file);
+			arffSaver.setDestination(file);
+			arffSaver.writeBatch();
+			
 		}
 	}
 
