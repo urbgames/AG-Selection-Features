@@ -82,21 +82,21 @@ public final class Classification {
 		if (data.classIndex() == -1)
 			data.setClassIndex(data.numAttributes() - 1);
 
-//		 RemovePercentage percentageData = new RemovePercentage();
-//		 percentageData.setInputFormat(data);
-//		
-//		 percentageData.setOptions(Utils.splitOptions("-P 90"));
-//		 Instances dataTest = Filter.useFilter(data, percentageData);
-//		
-//		 percentageData.setOptions(Utils.splitOptions("-V -P 90"));
-//		 Instances dataTrain = Filter.useFilter(data, percentageData);
-//		
-//		 classifier.buildClassifier(dataTrain);
-//		 Evaluation eval = new Evaluation(dataTrain);
-//		 eval.evaluateModel(classifier, dataTest);
+		 RemovePercentage percentageData = new RemovePercentage();
+		 percentageData.setInputFormat(data);
+		
+		 percentageData.setOptions(Utils.splitOptions("-P 90"));
+		 Instances dataTest = Filter.useFilter(data, percentageData);
+		
+		 percentageData.setOptions(Utils.splitOptions("-V -P 90"));
+		 Instances dataTrain = Filter.useFilter(data, percentageData);
+		
+		 classifier.buildClassifier(dataTrain);
+		 Evaluation eval = new Evaluation(dataTrain);
+		 eval.evaluateModel(classifier, dataTest);
 
-		Evaluation eval = new Evaluation(data);
-		eval.crossValidateModel(classifier, data, 10, new Random(1));
+//		Evaluation eval = new Evaluation(data);
+//		eval.crossValidateModel(classifier, data, 10, new Random(1));
 
 		return (float) eval.pctCorrect();
 
