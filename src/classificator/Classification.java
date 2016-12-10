@@ -118,6 +118,7 @@ public final class Classification {
 
 	public void changeSeed() throws IOException {
 		seed = new Random().nextInt();
+		System.out.println(seed);
 		file.insertLog("" + seed);
 	}
 
