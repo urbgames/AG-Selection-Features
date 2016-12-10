@@ -35,6 +35,9 @@ public class AG {
 		for (ChromosomeBinary chromosome : chromosomeClone) {
 			generatorFile.insertLog("Individuo: " + chromosome.getID());
 			generatorFile.insertLog("Fitness: " + chromosome.getFitnessValue());
+			generatorFile.insertLog("PCTCorrent: " + chromosome.getPctCorrectRate());
+			generatorFile.insertLog("FAR: " + chromosome.getFAR());
+			generatorFile.insertLog("FRR: " + chromosome.getFRR());
 			generatorFile.insertLog(chromosome.toStringBinaryGenesNumbers());
 			generatorFile.insertLog("");
 		}
@@ -92,27 +95,6 @@ public class AG {
 			
 			// MUTATION
 			mutation.mutationBinaryAllGenes(offspring, 0.1);
-//
-//			fitness.fitnessGeneratorClassificator(offspring);
-//
-//			// Data to support calc rate mutation
-//			List<ChromosomeBinary> offSpringTemp = new ArrayList<>(offspring);
-//			Collections.sort(offSpringTemp, Collections.reverseOrder());
-//			double maxFitness = offSpringTemp.get(0).getFitnessValue();
-//			double[] allFitness = new double[offSpringTemp.size()];
-//			for (int j = 0; j < offSpringTemp.size(); j++) {
-//				allFitness[j] = offSpringTemp.get(j).getFitnessValue();
-//			}
-//			double avgFitness = MathUtil.calcMean(allFitness);
-//
-//			// MUTATION
-//			for (int j = 0; j < offspring.size(); j++) {
-//				ChromosomeBinary f = offspring.get(j);
-//				double rateMutation = 0.5 * (maxFitness - f.getFitnessValue()) / (maxFitness - avgFitness);
-//				if (f.getFitnessValue() < avgFitness)
-//					rateMutation = 0.5;
-//				mutation.mutationBinaryAllGenes(f, rateMutation);
-//			}
 			
 			// EVALUATION FITNESS TO OFFSPRING
 			fitness.fitnessGeneratorClassificator(offspring);
@@ -150,10 +132,14 @@ public class AG {
 		// SIZE POPULATION, COUNT GENERATION
 		// new AG(1, 2, "0");
 
+		AG ag = null;
 		for (int i = 0; i < 30; i++) {
 			System.out.println("------------------ Repetição" + i + "-------------------");
-			new AG(60, 1000, "" + (i + 1));
+			ag = new AG(60, 1000, "" + (i + 1));
+			ag.fitness.changeSeed();
 		}
+		
+		ag.fitness.closeLog();
 	}
 
 	protected int geratorID() {

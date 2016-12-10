@@ -1,8 +1,10 @@
 package classificator;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Random;
 
+import util.GeneratorFile;
 import weka.classifiers.Evaluation;
 import weka.classifiers.bayes.BayesNet;
 import weka.core.Instances;
@@ -20,6 +22,8 @@ public final class Classification {
 	private String base3 = "C:\\Users\\Urbgames\\Documents\\keystroke_71features.arff";
 	private static Instances dataAll = null;
 	private String baseCurrent = base3;
+	private GeneratorFile file = new GeneratorFile("SEED");
+	private static int seed = 0;
 
 	private static volatile Classification classification;
 
@@ -36,10 +40,11 @@ public final class Classification {
 				}
 			}
 		}
+
 		return classification;
 	}
 
-	public float getFitnessClafissation(boolean[] binaryGenes) throws Exception {
+	public ResultClassification getFitnessClafissation(boolean[] binaryGenes) throws Exception {
 
 		Instances dataTemp = dataAll;
 		int count = 0;
@@ -50,14 +55,6 @@ public final class Classification {
 				count++;
 				optionsRemove += "" + (i + 1);
 				optionsRemove += ",";
-			}
-		}
-
-		String arrayString = "";
-		for (int i = 0; i < binaryGenes.length; i++) {
-			arrayString += binaryGenes[i] ? 1 : 0;
-			if (i + 1 != binaryGenes.length) {
-				arrayString += ",";
 			}
 		}
 
@@ -77,44 +74,69 @@ public final class Classification {
 		return classification(dataTemp);
 	}
 
-	private float classification(Instances data) throws Exception {
+	private ResultClassification classification(Instances data) throws Exception {
 
 		BayesNet classifier = new BayesNet();
 
 		if (data.classIndex() == -1)
 			data.setClassIndex(data.numAttributes() - 1);
 
-		 RemovePercentage percentageData = new RemovePercentage();
-		 percentageData.setInputFormat(data);
-		
-		 percentageData.setOptions(Utils.splitOptions("-P 90"));
-		 Instances dataTest = Filter.useFilter(data, percentageData);
-		
-		 percentageData.setOptions(Utils.splitOptions("-V -P 90"));
-		 Instances dataTrain = Filter.useFilter(data, percentageData);
-		
-		 classifier.buildClassifier(dataTrain);
-		 Evaluation eval = new Evaluation(dataTrain);
-		 eval.evaluateModel(classifier, dataTest);
+		// RemovePercentage percentageData = new RemovePercentage();
+		// percentageData.setInputFormat(data);
+		//
+		// percentageData.setOptions(Utils.splitOptions("-P 90"));
+		// Instances dataTest = Filter.useFilter(data, percentageData);
+		//
+		// percentageData.setOptions(Utils.splitOptions("-V -P 90"));
+		// Instances dataTrain = Filter.useFilter(data, percentageData);
+		//
+		// classifier.buildClassifier(dataTrain);
+		// Evaluation eval = new Evaluation(dataTrain);
+		// eval.evaluateModel(classifier, dataTest);
 
-//		Evaluation eval = new Evaluation(data);
-//		eval.crossValidateModel(classifier, data, 10, new Random(1));
+		Evaluation eval = new Evaluation(data);
+		eval.crossValidateModel(classifier, data, 10, new Random(seed));
 
-		return (float) eval.pctCorrect();
+		double avgFAR = 0, avgFRR = 0;
+		for (int i = 0; i < data.numClasses(); i++) {
+			avgFAR += eval.falsePositiveRate(i);
+			avgFRR += eval.falseNegativeRate(i);
+		}
+		avgFAR = avgFAR / (data.numClasses());
+		avgFAR *= 100;
+		avgFRR = avgFRR / (data.numClasses());
+		avgFRR *= 100;
 
+		ResultClassification classification = new ResultClassification();
+		classification.setFAR(avgFAR);
+		classification.setFRR(avgFRR);
+		classification.setPctCorrect(eval.pctCorrect());
+
+		return classification;
+
+	}
+
+	public void changeSeed() throws IOException {
+		seed = new Random().nextInt();
+		file.insertLog("" + seed);
+	}
+
+	public void closeLog() throws IOException {
+		file.closeLog();
 	}
 
 	public Classification() throws Exception {
 		if (dataAll == null) {
 			dataAll = new DataSource(baseCurrent).getDataSet();
-			dataAll.randomize(new Random());
+			changeSeed();
+			// dataAll.randomize(new Random());
 
-			ArffSaver arffSaver = new ArffSaver();
-			arffSaver.setInstances(dataAll);
-			File file = new File("D:/_Experimentos14/dataAll.arff");
-			arffSaver.setFile(file);
-			arffSaver.writeBatch();
-			
+			// ArffSaver arffSaver = new ArffSaver();
+			// arffSaver.setInstances(dataAll);
+			// File file = new File("D:/_Experimentos14/dataAll.arff");
+			// arffSaver.setFile(file);
+			// arffSaver.writeBatch();
+
 		}
 	}
 

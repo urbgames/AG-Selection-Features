@@ -21,20 +21,57 @@ public class ChromosomeToExcel {
 		excelGenerator.insertCellInfo(0, 2, "Min", Cell.CELL_TYPE_STRING);
 		excelGenerator.insertCellInfo(0, 3, "Mean", Cell.CELL_TYPE_STRING);
 		excelGenerator.insertCellInfo(0, 4, "Std", Cell.CELL_TYPE_STRING);
+		
+		excelGenerator.insertCellInfo(0, 6, "Max-PCT", Cell.CELL_TYPE_STRING);
+		excelGenerator.insertCellInfo(0, 7, "Min-PCT", Cell.CELL_TYPE_STRING);
+		excelGenerator.insertCellInfo(0, 8, "Mean-PCT", Cell.CELL_TYPE_STRING);
+		excelGenerator.insertCellInfo(0, 9, "Std-PCT", Cell.CELL_TYPE_STRING);
+
+		excelGenerator.insertCellInfo(0, 11, "Max-FAR", Cell.CELL_TYPE_STRING);
+		excelGenerator.insertCellInfo(0, 12, "Min-FAR", Cell.CELL_TYPE_STRING);
+		excelGenerator.insertCellInfo(0, 13, "Mean-FAR", Cell.CELL_TYPE_STRING);
+		excelGenerator.insertCellInfo(0, 14, "Std-FAR", Cell.CELL_TYPE_STRING);
+
+		excelGenerator.insertCellInfo(0, 16, "Max-FRR", Cell.CELL_TYPE_STRING);
+		excelGenerator.insertCellInfo(0, 17, "Min-FRR", Cell.CELL_TYPE_STRING);
+		excelGenerator.insertCellInfo(0, 18, "Mean-FRR", Cell.CELL_TYPE_STRING);
+		excelGenerator.insertCellInfo(0, 19, "Std-FRR", Cell.CELL_TYPE_STRING);
 	}
 
 	public void converterChromosomeToExcelRow(List<ChromosomeBinary> chromosomes, int generation) {
 
 		try {
 			double[] genes = new double[chromosomes.size()];
+			double[] PCTCorrent = new double[chromosomes.size()];
+			double[] FAR = new double[chromosomes.size()];
+			double[] FRR = new double[chromosomes.size()];
 			for (int i = 0; i < chromosomes.size(); i++) {
 				genes[i] = chromosomes.get(i).getFitnessValue();
+				PCTCorrent[i] = chromosomes.get(i).getPctCorrectRate();
+				FAR[i] = chromosomes.get(i).getFAR();
+				FRR[i] = chromosomes.get(i).getFRR();
 			}
+			
 			excelGenerator.insertCellInfo(generation + 1, 0, "" + generation, Cell.CELL_TYPE_STRING);
 			excelGenerator.insertCellInfo(generation + 1, 1, "" + MathUtil.calcMax(genes), Cell.CELL_TYPE_NUMERIC);
 			excelGenerator.insertCellInfo(generation + 1, 2, "" + MathUtil.calcMin(genes), Cell.CELL_TYPE_NUMERIC);
 			excelGenerator.insertCellInfo(generation + 1, 3, "" + MathUtil.calcMean(genes), Cell.CELL_TYPE_NUMERIC);
 			excelGenerator.insertCellInfo(generation + 1, 4, "" + MathUtil.calcStd(genes), Cell.CELL_TYPE_NUMERIC);
+
+			excelGenerator.insertCellInfo(generation + 1, 6, "" + MathUtil.calcMax(PCTCorrent), Cell.CELL_TYPE_NUMERIC);
+			excelGenerator.insertCellInfo(generation + 1, 7, "" + MathUtil.calcMin(PCTCorrent), Cell.CELL_TYPE_NUMERIC);
+			excelGenerator.insertCellInfo(generation + 1, 8, "" + MathUtil.calcMean(PCTCorrent), Cell.CELL_TYPE_NUMERIC);
+			excelGenerator.insertCellInfo(generation + 1, 9, "" + MathUtil.calcStd(PCTCorrent), Cell.CELL_TYPE_NUMERIC);
+			
+			excelGenerator.insertCellInfo(generation + 1, 11, "" + MathUtil.calcMax(FAR), Cell.CELL_TYPE_NUMERIC);
+			excelGenerator.insertCellInfo(generation + 1, 12, "" + MathUtil.calcMin(FAR), Cell.CELL_TYPE_NUMERIC);
+			excelGenerator.insertCellInfo(generation + 1, 13, "" + MathUtil.calcMean(FAR), Cell.CELL_TYPE_NUMERIC);
+			excelGenerator.insertCellInfo(generation + 1, 14, "" + MathUtil.calcStd(FAR), Cell.CELL_TYPE_NUMERIC);
+
+			excelGenerator.insertCellInfo(generation + 1, 16, "" + MathUtil.calcMax(FRR), Cell.CELL_TYPE_NUMERIC);
+			excelGenerator.insertCellInfo(generation + 1, 17, "" + MathUtil.calcMin(FRR), Cell.CELL_TYPE_NUMERIC);
+			excelGenerator.insertCellInfo(generation + 1, 18, "" + MathUtil.calcMean(FRR), Cell.CELL_TYPE_NUMERIC);
+			excelGenerator.insertCellInfo(generation + 1, 19, "" + MathUtil.calcStd(FRR), Cell.CELL_TYPE_NUMERIC);
 		} catch (Exception e) {
 			System.out.println("erro");
 		}

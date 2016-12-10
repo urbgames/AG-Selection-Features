@@ -109,26 +109,27 @@ public class TestGA {
 		// population.forEach(x -> System.out.println("Individuo: " + x.getID()
 		// + " - Fitness: " + x.getFitnessValue()));
 
-		// double[] array = new double[] { 10.11, 10.11, 10.11, 10, 9.99 };
-		// double[] arrayNormalize = MathUtil.normalize(array);
-		// for (double d : arrayNormalize) {
-		// System.out.println(d);
-		// }
-		//
+		 double[] array = new double[] { 90.05602264404297, 120, 90.05602264404297, 90.05602264404297 };
+		 double[] arrayNormalize = MathUtil.normalize(array);
+		 
+		 for (double d : arrayNormalize) {
+		 System.out.println(d);
+		 }
+		
 
-		List<Integer> teste = new ArrayList<>();
-		teste.add(5);
-		teste.add(10);
-		teste.add(0);
-		teste.add(112);
+//		List<Integer> teste = new ArrayList<>();
+//		teste.add(5);
+//		teste.add(10);
+//		teste.add(0);
+//		teste.add(112);
 //		List<Integer> teste2 = new ArrayList<>(teste);
 //		teste2.remove(0);
 		
-		Collections.shuffle(teste);
-		System.out.println(teste.get(0));
-
-		double w = 0.5;
-				System.out.println(w);
+//		Collections.shuffle(teste);
+//		System.out.println(teste.get(0));
+//
+//		double w = 0.5;
+//				System.out.println(w);
 		
 	}
 

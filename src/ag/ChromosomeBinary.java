@@ -10,6 +10,9 @@ public class ChromosomeBinary implements Comparable<ChromosomeBinary> {
 	private boolean isUnique;
 	private int maxCountGenes;
 	private double fitnessValue;
+	private double pctCorrectRate;
+	private double FAR;
+	private double FRR;
 	private boolean[] binaryGenes;
 
 	public ChromosomeBinary(int ID, boolean isUnique, int maxCountGenes) {
@@ -81,7 +84,7 @@ public class ChromosomeBinary implements Comparable<ChromosomeBinary> {
 		return fitnessValue;
 	}
 
-	public void setFitnessValue(float fitnessValue) {
+	public void setFitnessValue(double fitnessValue) {
 		this.fitnessValue = fitnessValue;
 	}
 
@@ -143,6 +146,30 @@ public class ChromosomeBinary implements Comparable<ChromosomeBinary> {
 
 	public void setBinaryGenes(boolean[] binaryGenes) {
 		this.binaryGenes = binaryGenes;
+	}
+
+	public double getPctCorrectRate() {
+		return pctCorrectRate;
+	}
+
+	public void setPctCorrectRate(double pctCorrectRate) {
+		this.pctCorrectRate = pctCorrectRate;
+	}
+
+	public double getFAR() {
+		return FAR;
+	}
+
+	public void setFAR(double fAR) {
+		FAR = fAR;
+	}
+
+	public double getFRR() {
+		return FRR;
+	}
+
+	public void setFRR(double fRR) {
+		FRR = fRR;
 	}
 
 	@Override
