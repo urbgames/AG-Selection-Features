@@ -22,7 +22,6 @@ public final class Classification {
 	private String base3 = "C:\\Users\\Urbgames\\Documents\\keystroke_71features.arff";
 	private static Instances dataAll = null;
 	private String baseCurrent = base3;
-	private GeneratorFile file = new GeneratorFile("SEED");
 	private static int seed = 0;
 
 	private static volatile Classification classification;
@@ -118,18 +117,11 @@ public final class Classification {
 
 	public void changeSeed() throws IOException {
 		seed = new Random().nextInt();
-		System.out.println(seed);
-		file.insertLog("" + seed);
-	}
-
-	public void closeLog() throws IOException {
-		file.closeLog();
 	}
 
 	public Classification() throws Exception {
 		if (dataAll == null) {
 			dataAll = new DataSource(baseCurrent).getDataSet();
-			changeSeed();
 			// dataAll.randomize(new Random());
 
 			// ArffSaver arffSaver = new ArffSaver();
@@ -139,6 +131,14 @@ public final class Classification {
 			// arffSaver.writeBatch();
 
 		}
+	}
+
+	public int getSeed() {
+		return seed;
+	}
+
+	public static void setSeed(int seed) {
+		Classification.seed = seed;
 	}
 
 }

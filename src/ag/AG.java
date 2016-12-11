@@ -54,6 +54,11 @@ public class AG {
 		this.population = new ArrayList<>();
 		this.factoryChromosome = FactoryChromosome.getInstance();
 
+		GeneratorFile file = new GeneratorFile("SEED" + order);
+		fitness.changeSeed();
+		file.insertLog("" + fitness.getSeedClassification());
+		file.closeLog();
+
 		for (int i = 0; i < sizePopulation; i++) {
 			ChromosomeBinary chromosome = factoryChromosome.factoryChromosome();
 			chromosome.randonInitializeGenesBinary();
@@ -89,17 +94,17 @@ public class AG {
 
 			registerLog(this.generatorFileParentsAfterCrossAndMutation, parents);
 			chromosomeToExcelParentsAfterCrossAndMutation.converterChromosomeToExcelRow(parents, i);
-			
+
 			// CROSSOVER
 			List<ChromosomeBinary> offspring = crossover.onePoint(parents, 10);
-			
+
 			// MUTATION
 			mutation.mutationBinaryAllGenes(offspring, 0.1);
-			
+
 			// EVALUATION FITNESS TO OFFSPRING
 			fitness.fitnessGeneratorClassificator(offspring);
 			registerLog(generatorFileOffspringBeforeCrossAndMutation, offspring);
-			
+
 			chromosomeToExcelOffspringBeforeCrossAndMutation.converterChromosomeToExcelRow(offspring, i);
 
 			// SELECT POPULATION TO NEXT GENERATION
@@ -110,7 +115,7 @@ public class AG {
 			population.clear();
 			population.addAll(selection.rank(nextPopulation, 1, false));
 			population.addAll(selection.tournament(nextPopulation, sizePopulation - 1, false, 2));
-			
+
 			registerLog(this.generatorFile, this.population);
 			chromosomeToExcel.converterChromosomeToExcelRow(population, i);
 
@@ -132,14 +137,10 @@ public class AG {
 		// SIZE POPULATION, COUNT GENERATION
 		// new AG(1, 2, "0");
 
-		AG ag = null;
-		for (int i = 0; i < 30; i++) {
+		for (int i = 0; i < 5; i++) {
 			System.out.println("------------------ Repetição" + i + "-------------------");
-			ag = new AG(60, 1000, "" + (i + 1));
-			ag.fitness.changeSeed();
+			new AG(10, 3, "" + (i + 1));
 		}
-		
-		ag.fitness.closeLog();
 	}
 
 	protected int geratorID() {

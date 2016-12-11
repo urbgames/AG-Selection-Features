@@ -25,12 +25,14 @@ public class Fitness {
 		}
 	}
 
-	public void changeSeed() throws IOException {
-		classification.changeSeed();
+	public int getSeedClassification() throws Exception {
+		classification = Classification.getInstance();
+		return classification.getSeed();
 	}
 
-	public void closeLog() throws IOException {
-		classification.closeLog();
+	public void changeSeed() throws Exception {
+		classification = Classification.getInstance();
+		classification.changeSeed();
 	}
 
 	public void fitnessGeneratorClassificator(List<ChromosomeBinary> chromosomes) throws Exception {
