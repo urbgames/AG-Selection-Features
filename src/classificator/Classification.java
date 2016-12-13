@@ -94,7 +94,11 @@ public final class Classification {
 		// eval.evaluateModel(classifier, dataTest);
 
 		Evaluation eval = new Evaluation(data);
-		eval.crossValidateModel(classifier, data, 10, new Random(seed));
+		try {
+			eval.crossValidateModel(classifier, data, 10, new Random(seed));
+		} catch (Exception e) {
+			eval.crossValidateModel(classifier, data, 10, new Random(seed));
+		}
 
 		double avgFAR = 0, avgFRR = 0;
 		for (int i = 0; i < data.numClasses(); i++) {
@@ -116,7 +120,7 @@ public final class Classification {
 	}
 
 	public void changeSeed() throws IOException {
-		seed = new Random().nextInt();
+		seed = new Random(100000000).nextInt();
 	}
 
 	public Classification() throws Exception {
