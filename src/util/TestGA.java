@@ -130,7 +130,9 @@ public class TestGA {
 //
 //		double w = 0.5;
 //				System.out.println(w);
-				 
+		
+		 System.out.println(new Random().nextInt());
+		 
 	}
 
 	public double calcMin(double[] array) {

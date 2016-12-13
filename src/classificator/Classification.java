@@ -80,37 +80,37 @@ public final class Classification {
 		if (data.classIndex() == -1)
 			data.setClassIndex(data.numAttributes() - 1);
 
-		Instances dataTemp = data;
-		dataTemp.randomize(new Random(seed));
+		// Instances dataTemp = data;
+		// dataTemp.randomize(new Random(seed));
+		//
+		// RemovePercentage percentageData = new RemovePercentage();
+		// percentageData.setInputFormat(dataTemp);
+		//
+		// percentageData.setOptions(Utils.splitOptions("-P 90"));
+		// Instances dataTest = Filter.useFilter(dataTemp, percentageData);
+		//
+		// percentageData.setOptions(Utils.splitOptions("-V -P 90"));
+		// Instances dataTrain = Filter.useFilter(dataTemp, percentageData);
+		//
+		// classifier.buildClassifier(dataTrain);
+		// Evaluation eval = new Evaluation(dataTrain);
+		// eval.evaluateModel(classifier, dataTest);
 
-		RemovePercentage percentageData = new RemovePercentage();
-		percentageData.setInputFormat(dataTemp);
-
-		percentageData.setOptions(Utils.splitOptions("-P 90"));
-		Instances dataTest = Filter.useFilter(dataTemp, percentageData);
-
-		percentageData.setOptions(Utils.splitOptions("-V -P 90"));
-		Instances dataTrain = Filter.useFilter(dataTemp, percentageData);
-
-		classifier.buildClassifier(dataTrain);
-		Evaluation eval = new Evaluation(dataTrain);
-		eval.evaluateModel(classifier, dataTest);
-
-		// Evaluation eval = new Evaluation(data);
-		// try {
-		// eval.crossValidateModel(classifier, data, 10, new Random(seed));
-		// } catch (Exception e) {
-		// eval.crossValidateModel(classifier, data, 10, new Random(seed));
-		// }
+		Evaluation eval = new Evaluation(data);
+		try {
+			eval.crossValidateModel(classifier, data, 10, new Random(seed));
+		} catch (Exception e) {
+			eval.crossValidateModel(classifier, data, 10, new Random(seed));
+		}
 
 		double avgFAR = 0, avgFRR = 0;
-		for (int i = 0; i < dataTemp.numClasses(); i++) {
+		for (int i = 0; i < data.numClasses(); i++) {
 			avgFAR += eval.falsePositiveRate(i);
 			avgFRR += eval.falseNegativeRate(i);
 		}
-		avgFAR = avgFAR / (dataTemp.numClasses());
+		avgFAR = avgFAR / (data.numClasses());
 		avgFAR *= 100;
-		avgFRR = avgFRR / (dataTemp.numClasses());
+		avgFRR = avgFRR / (data.numClasses());
 		avgFRR *= 100;
 
 		ResultClassification classification = new ResultClassification();
@@ -123,7 +123,7 @@ public final class Classification {
 	}
 
 	public void changeSeed() throws IOException {
-		seed = new Random(100000000).nextInt();
+		seed = new Random().nextInt();
 	}
 
 	public Classification() throws Exception {

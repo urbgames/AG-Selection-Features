@@ -139,7 +139,7 @@ public class AG {
 
 		for (int i = 0; i < 10; i++) {
 			System.out.println("------------------ Repetição" + i + "-------------------");
-			new AG(60, 1000, "" + (i + 1));
+			new AG(10, 3, "" + (i + 1));
 			
 		}
 	}
