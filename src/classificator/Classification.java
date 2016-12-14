@@ -80,21 +80,21 @@ public final class Classification {
 		if (data.classIndex() == -1)
 			data.setClassIndex(data.numAttributes() - 1);
 
-		// Instances dataTemp = data;
-		// dataTemp.randomize(new Random(seed));
-		//
-		// RemovePercentage percentageData = new RemovePercentage();
-		// percentageData.setInputFormat(dataTemp);
-		//
-		// percentageData.setOptions(Utils.splitOptions("-P 90"));
-		// Instances dataTest = Filter.useFilter(dataTemp, percentageData);
-		//
-		// percentageData.setOptions(Utils.splitOptions("-V -P 90"));
-		// Instances dataTrain = Filter.useFilter(dataTemp, percentageData);
-		//
-		// classifier.buildClassifier(dataTrain);
-		// Evaluation eval = new Evaluation(dataTrain);
-		// eval.evaluateModel(classifier, dataTest);
+//		 Instances dataTemp = data;
+//		 dataTemp.randomize(new Random(seed));
+//		
+//		 RemovePercentage percentageData = new RemovePercentage();
+//		 percentageData.setInputFormat(dataTemp);
+//		
+//		 percentageData.setOptions(Utils.splitOptions("-P 90"));
+//		 Instances dataTest = Filter.useFilter(dataTemp, percentageData);
+//		
+//		 percentageData.setOptions(Utils.splitOptions("-V -P 90"));
+//		 Instances dataTrain = Filter.useFilter(dataTemp, percentageData);
+//		
+//		 classifier.buildClassifier(dataTrain);
+//		 Evaluation eval = new Evaluation(dataTrain);
+//		 eval.evaluateModel(classifier, dataTest);
 
 		Evaluation eval = new Evaluation(data);
 		try {

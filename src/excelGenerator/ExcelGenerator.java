@@ -16,7 +16,7 @@ import org.apache.poi.ss.util.CellUtil;
 
 public class ExcelGenerator {
 
-	private String fileName = "C:/Users/urbgames/Desktop/_Experimentos16/exportInfoGA";
+	private String fileName = "C:/Users/urbgames/Desktop/_Experimentos15.2/exportInfoGA";
 	private HSSFWorkbook workbook;
 	private HSSFSheet sheetInfoGA;
 
