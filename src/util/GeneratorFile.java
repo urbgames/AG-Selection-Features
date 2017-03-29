@@ -12,7 +12,8 @@ public class GeneratorFile {
 
 	public GeneratorFile(String order) throws IOException {
 
-		this.file = new File("C:/Users/urbgames/Desktop/_Experimentos15.2/GA_SELECTION_BASE" + order + ".txt");
+		//DIRECTORY TO SAVE LOG POPULATION .TXT
+		this.file = new File("D://GA_SELECTION_BASE" + order + ".txt");
 		new PrintWriter(this.file).close();
 		fileWritter = new FileWriter(this.file, true);
 

@@ -81,16 +81,16 @@ public class AG {
 			generatorFile.insertLog(labelGeneration);
 			generatorFileParentsAfterCrossAndMutation.insertLog(labelGeneration);
 			generatorFileOffspringBeforeCrossAndMutation.insertLog(labelGeneration);
+			
 			//
-			// EVALUATION FITNESS TO PARENTS
+			// EVALUATION FITNESS INITIAL
 			if (i == 0)
 				fitness.fitnessGeneratorClassificator(population);
 
-			// SELECTION PARENTS TO NEXT GENERATION
-			// VALUE RANGE BETWEEN 0.5 and 1
+			
+			// SELECTION PARENTS 
 			List<ChromosomeBinary> parents = new ArrayList<>();
-			// parents.addAll(selection.rank(population, 1, false));
-			parents.addAll(selection.rouletteSelectNormalized(population, sizePopulation, false));
+			parents.addAll(selection.rouletteSelect(population, sizePopulation, false));
 
 			registerLog(this.generatorFileParentsAfterCrossAndMutation, parents);
 			chromosomeToExcelParentsAfterCrossAndMutation.converterChromosomeToExcelRow(parents, i);
@@ -107,11 +107,13 @@ public class AG {
 
 			chromosomeToExcelOffspringBeforeCrossAndMutation.converterChromosomeToExcelRow(offspring, i);
 
-			// SELECT POPULATION TO NEXT GENERATION
+			//JOIN POPULATION AND OFFSPRINT
 			List<ChromosomeBinary> nextPopulation = new ArrayList<>();
 			nextPopulation.addAll(population);
 			nextPopulation.addAll(offspring);
 
+
+			// SELECT POPULATION TO NEXT GENERATION
 			population.clear();
 			population.addAll(selection.rank(nextPopulation, 1, false));
 			population.addAll(selection.tournament(nextPopulation, sizePopulation - 1, false, 2));
@@ -134,13 +136,11 @@ public class AG {
 	}
 
 	public static void main(String[] args) throws Exception {
-		// SIZE POPULATION, COUNT GENERATION
-		// new AG(1, 2, "0");
 
 		for (int i = 0; i < 5; i++) {
 			System.out.println("------------------ Repetição" + i + "-------------------");
-			new AG(60, 1000, "" + (i + 1));
-			
+			// PARAMETERS (SIZE POPULATION, SIZE GENERATION)
+			new AG(60, 1000, "" + (i + 1));	
 		}
 	}
 

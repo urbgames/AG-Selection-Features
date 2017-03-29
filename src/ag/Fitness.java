@@ -6,14 +6,12 @@ import java.util.Random;
 
 import classificator.Classification;
 import classificator.ResultClassification;
-import util.PrintStatusChromosome;
 
 public class Fitness {
 
 	private Classification classification;
 
 	public void fitnessGenerator(List<ChromosomeBinary> chromosomes) {
-		printStatus();
 		for (int i = 0; i < chromosomes.size(); i++) {
 			float fitness = 0;
 			for (int j = 0; j < chromosomes.get(i).countGenes(); j++) {
@@ -36,7 +34,6 @@ public class Fitness {
 	}
 
 	public void fitnessGeneratorClassificator(List<ChromosomeBinary> chromosomes) throws Exception {
-		printStatus();
 		classification = Classification.getInstance();
 		for (int i = 0; i < chromosomes.size(); i++) {
 			ResultClassification resultClassification = classification
@@ -47,10 +44,6 @@ public class Fitness {
 			chromosomes.get(i).setFAR(resultClassification.getFAR());
 			chromosomes.get(i).setFRR(resultClassification.getFRR());
 		}
-	}
-
-	private void printStatus() {
-		PrintStatusChromosome.InitializeFitness();
 	}
 
 }

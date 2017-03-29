@@ -56,7 +56,6 @@ public class Selection {
 
 			for (int i = 0; i < chromosomeClone.size(); i++) {
 				proportionalFitness[i] = chromosomeClone.get(i).getFitnessValue();
-				
 			}
 
 			proportionalFitness = MathUtil.normalize(proportionalFitness);
@@ -86,8 +85,6 @@ public class Selection {
 			size = (int) (chromosome.size() * (size / 100.0f));
 		}
 
-//		List<ChromosomeBinary> chromosomeClone = new ArrayList<>(chromosome);
-
 		List<ChromosomeBinary> selectionChromosomes = new ArrayList<>();
 		Collections.sort(chromosome, Collections.reverseOrder());
 
@@ -111,7 +108,6 @@ public class Selection {
 		}
 
 		// List<ChromosomeBinary> chromosomeClone = new
-		// ArrayList<>(chromosomes);
 		List<ChromosomeBinary> chromosomeReturn = new ArrayList<>();
 
 		Random random = new Random();

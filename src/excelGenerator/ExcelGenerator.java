@@ -16,7 +16,8 @@ import org.apache.poi.ss.util.CellUtil;
 
 public class ExcelGenerator {
 
-	private String fileName = "C:/Users/urbgames/Desktop/_Experimentos15.2/exportInfoGA";
+	//DIRECTORY TO SAVE METRIC GA .XLS
+	private String fileName = "D:/";
 	private HSSFWorkbook workbook;
 	private HSSFSheet sheetInfoGA;
 

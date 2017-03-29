@@ -1,19 +1,14 @@
 package classificator;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.Random;
 
-import util.GeneratorFile;
 import weka.classifiers.Evaluation;
 import weka.classifiers.bayes.BayesNet;
 import weka.core.Instances;
-import weka.core.Utils;
-import weka.core.converters.ArffSaver;
 import weka.core.converters.ConverterUtils.DataSource;
 import weka.filters.Filter;
 import weka.filters.unsupervised.attribute.Remove;
-import weka.filters.unsupervised.instance.RemovePercentage;
 
 public final class Classification {
 
@@ -80,6 +75,7 @@ public final class Classification {
 		if (data.classIndex() == -1)
 			data.setClassIndex(data.numAttributes() - 1);
 
+		//VALIDAÇÃO SPLIT
 //		 Instances dataTemp = data;
 //		 dataTemp.randomize(new Random(seed));
 //		
@@ -96,6 +92,7 @@ public final class Classification {
 //		 Evaluation eval = new Evaluation(dataTrain);
 //		 eval.evaluateModel(classifier, dataTest);
 
+		//VALIDAÇÃO CRUZADA
 		Evaluation eval = new Evaluation(data);
 		try {
 			eval.crossValidateModel(classifier, data, 10, new Random(seed));
@@ -129,14 +126,6 @@ public final class Classification {
 	public Classification() throws Exception {
 		if (dataAll == null) {
 			dataAll = new DataSource(baseCurrent).getDataSet();
-			// dataAll.randomize(new Random());
-
-			// ArffSaver arffSaver = new ArffSaver();
-			// arffSaver.setInstances(dataAll);
-			// File file = new File("D:/_Experimentos14/dataAll.arff");
-			// arffSaver.setFile(file);
-			// arffSaver.writeBatch();
-
 		}
 	}
 
