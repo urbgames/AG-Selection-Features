@@ -95,7 +95,6 @@ public final class Classification {
 		//VALIDAÇÃO CRUZADA
 		Evaluation eval = new Evaluation(data);
 		try {
-			
 			eval.crossValidateModel(classifier, data, 10, new Random(seed));
 		} catch (Exception e) {
 			eval.crossValidateModel(classifier, data, 10, new Random(seed));
