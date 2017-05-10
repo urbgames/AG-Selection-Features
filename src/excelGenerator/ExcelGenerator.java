@@ -15,7 +15,7 @@ import org.apache.poi.ss.util.CellRangeAddress;
 public class ExcelGenerator {
 
 	//DIRECTORY TO SAVE METRIC GA .XLS
-	private String fileName = "GA - ";
+	private String fileName = "";
 	private HSSFWorkbook workbook;
 	private HSSFSheet sheetInfoGA;
 
