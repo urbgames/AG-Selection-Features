@@ -70,7 +70,6 @@ public class AG {
 			population.addAll(selection.tournament(nextPopulation, sizePopulation - 1, false, 2));
 
 			long totalTime = System.currentTimeMillis() - starTime;
-
 			chromosomeToExcel2.converterChromosomeToExcelRow2(population, i, totalTime, classifier.getSeed());
 
 		}

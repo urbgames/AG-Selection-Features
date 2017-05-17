@@ -31,7 +31,6 @@ public class ThreadManager extends Thread{
 		listClassifierCountThreadTotal.forEach((classifier, value) -> {
 			while (listClassifierCountThreadCurrent.get(classifier) < value) {
 				createThreadClassifier(classifier);
-				listClassifierCountThreadCurrent.put(classifier, listClassifierCountThreadCurrent.get(classifier) + 1);
 			}
 		});
 
@@ -86,6 +85,7 @@ public class ThreadManager extends Thread{
 
 	private void createThreadClassifier(String classifier) {
 		new ClassificatorThread(sizePopulation, maxInteration, listClassifierExecuted.get(classifier), this, classifier);
+		listClassifierCountThreadCurrent.put(classifier, listClassifierCountThreadCurrent.get(classifier) + 1);
 		listClassifierExecuted.put((String) classifier, listClassifierExecuted.get(classifier) + 1);
 	}
 
