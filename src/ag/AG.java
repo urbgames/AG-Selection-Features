@@ -79,6 +79,7 @@ public class AG {
 	}
 
 	public static void main(String[] args) throws Exception {
+		System.out.println("GA");
 		new ThreadManager();
 	}
 
