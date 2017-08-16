@@ -15,5 +15,6 @@
 	<classpathentry kind="lib" path="libsvm.jar"/>
 	<classpathentry kind="lib" path="weka_3.6.jar" sourcepath="C:/Users/Urbgames/Google Drive/Mestrado/workspace2/Weka/bin/weka.zip"/>
 	<classpathentry kind="lib" path="javax.mail-1.6.0.jar"/>
+	<classpathentry kind="lib" path="jackson-all-1.9.0.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

@@ -1,9 +1,12 @@
 package ag;
 
+import org.codehaus.jackson.annotate.JsonCreator;
+import org.codehaus.jackson.annotate.JsonIgnore;
+import org.codehaus.jackson.annotate.JsonProperty;
+
 public class ChromosomeBinary implements Comparable<ChromosomeBinary> {
 
 	private int ID;
-	private boolean isUnique;
 	private int maxCountGenes;
 	private double fitnessValue;
 	private double pctCorrectRate;
@@ -11,10 +14,26 @@ public class ChromosomeBinary implements Comparable<ChromosomeBinary> {
 	private double FRR;
 	private boolean[] binaryGenes;
 
+	@JsonCreator
+	public ChromosomeBinary(@JsonProperty("ID") int ID, @JsonProperty("maxCountGenes") int maxCountGenes,
+			@JsonProperty("fitnessValue") double fitnessValue, @JsonProperty("pctCorrectRate") double pctCorrectRate,
+			@JsonProperty("FAR") double FAR, @JsonProperty("FRR") double FRR,
+			@JsonProperty("binaryGenes") boolean[] binaryGenes) {
+		this.ID = ID;
+		this.maxCountGenes = maxCountGenes;
+		this.fitnessValue = fitnessValue;
+		this.pctCorrectRate = pctCorrectRate;
+		this.FAR = FAR;
+		this.FRR = FRR;
+		this.binaryGenes = binaryGenes;
+	}
+
 	public ChromosomeBinary(int ID, int maxCountGenes) {
 		this.ID = ID;
 		this.maxCountGenes = maxCountGenes;
 		this.binaryGenes = new boolean[maxCountGenes];
+		this.fitnessValue = 0;
+		randonInitializeGenesBinary();
 	}
 
 	public void randonInitializeGenesBinary() {
@@ -61,14 +80,6 @@ public class ChromosomeBinary implements Comparable<ChromosomeBinary> {
 
 	public int getID() {
 		return ID;
-	}
-
-	public boolean isUnique() {
-		return isUnique;
-	}
-
-	public void setUnique(boolean isUnique) {
-		this.isUnique = isUnique;
 	}
 
 	public boolean[] getBinaryGenes() {
@@ -127,6 +138,10 @@ public class ChromosomeBinary implements Comparable<ChromosomeBinary> {
 		FRR = fRR;
 	}
 
+	public void setID(int iD) {
+		ID = iD;
+	}
+
 	@Override
 	public int compareTo(ChromosomeBinary chromosomeBinary) {
 		if (this.fitnessValue < chromosomeBinary.getFitnessValue())
@@ -137,6 +152,7 @@ public class ChromosomeBinary implements Comparable<ChromosomeBinary> {
 			return 0;
 	}
 
+	@JsonIgnore
 	public int getEnableFeatures() {
 		int count = 0;
 		for (int i = 0; i < binaryGenes.length; i++)
@@ -145,6 +161,7 @@ public class ChromosomeBinary implements Comparable<ChromosomeBinary> {
 		return count;
 	}
 
+	@JsonIgnore
 	public int getDisabledFeatures() {
 		int count = 0;
 		for (int i = 0; i < binaryGenes.length; i++)
@@ -153,6 +170,7 @@ public class ChromosomeBinary implements Comparable<ChromosomeBinary> {
 		return count;
 	}
 
+	@JsonIgnore
 	public double getFeatureReduction() {
 		return (double) (100 * getDisabledFeatures()) / maxCountGenes;
 	}

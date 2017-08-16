@@ -33,6 +33,7 @@ public class SenderMail {
 				return new PasswordAuthentication(username, password);
 			}
 		});
+//		session.setDebug(true);
 	}
 
 	private Properties getProperties(Protocols protocol) {
@@ -70,6 +71,7 @@ public class SenderMail {
 			message.setContent(multipart);
 
 			Transport.send(message);
+		
 
 		} catch (MessagingException e) {
 			throw new RuntimeException(e);

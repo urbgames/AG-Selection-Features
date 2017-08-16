@@ -22,7 +22,7 @@ public final class Classification {
 	private String base3 = "keystroke_71features.arff";
 	private static Instances dataAll = null;
 	private String baseCurrent = base3;
-	private int seed = 0;
+	public int seed;
 	private Classifier classifier;
 	private String classifierName;
 	public static final String BAYESNET = "BAYESNET";
@@ -33,9 +33,22 @@ public final class Classification {
 	public static final String RANDOMFOREST = "RANDOMFOREST";
 	public static final String MLP = "MLP";
 
-	public int getLegth() {
+	public int getLength() {
 		return dataAll.numAttributes() - 1;
 	}
+
+	// private static Classification getInstance() throws Exception {
+	//
+	// if (classification == null) {
+	// synchronized (Classification.class) {
+	// if (classification == null) {
+	// classification = new Classification();
+	// }
+	// }
+	// }
+	//
+	// return classification;
+	// }
 
 	public ResultClassification getFitnessClafissation(boolean[] binaryGenes) throws Exception {
 
@@ -71,29 +84,29 @@ public final class Classification {
 
 		if (data.classIndex() == -1)
 			data.setClassIndex(data.numAttributes() - 1);
-		
+
 		// VALIDAÇÃO CRUZADA
-		/*Evaluation eval = new Evaluation(data);
-		try {
-			eval.crossValidateModel(classifier, data, 10, new Random(seed));
-		} catch (Exception e) {
-			eval.crossValidateModel(classifier, data, 10, new Random(seed));
-		}*/
+		/*
+		 * Evaluation eval = new Evaluation(data); try {
+		 * eval.crossValidateModel(classifier, data, 10, new Random(seed)); }
+		 * catch (Exception e) { eval.crossValidateModel(classifier, data, 10,
+		 * new Random(seed)); }
+		 */
 
 		data.randomize(new Random(seed));
-		
+
 		RemovePercentage percentageData = new RemovePercentage();
 		percentageData.setInputFormat(data);
 		percentageData.setOptions(Utils.splitOptions("-P 90"));
 		Instances dataTest = Filter.useFilter(data, percentageData);
-		
+
 		percentageData.setOptions(Utils.splitOptions("-V -P 90"));
 		Instances dataTrain = Filter.useFilter(data, percentageData);
-		
+
 		classifier.buildClassifier(dataTrain);
 		Evaluation eval = new Evaluation(dataTrain);
 		eval.evaluateModel(classifier, dataTest);
-		
+
 		double avgFAR = 0, avgFRR = 0;
 		for (int i = 0; i < data.numClasses(); i++) {
 			avgFAR += eval.falsePositiveRate(i);
@@ -113,12 +126,15 @@ public final class Classification {
 
 	}
 
-	public Classification(String classifier) throws Exception {
+	public Classification(String classifier, int... seedCreated) throws Exception {
 		if (dataAll == null) {
 			dataAll = new DataSource(baseCurrent).getDataSet();
 		}
 
-		seed = new Random().nextInt();
+		if (seedCreated.length > 0)
+			seed = seedCreated[0];
+		else
+			seed = new Random().nextInt();
 
 		this.classifierName = classifier;
 		switch (classifier) {
@@ -163,6 +179,10 @@ public final class Classification {
 
 	}
 
+	// private void changeSeed() throws IOException {
+	// seed = new Random().nextInt();
+	// }
+
 	public String getClassifierName() {
 		return classifierName;
 	}
@@ -174,4 +194,5 @@ public final class Classification {
 	public int getSeed() {
 		return seed;
 	}
+
 }

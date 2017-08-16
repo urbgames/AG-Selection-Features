@@ -13,7 +13,7 @@ public final class FactoryChromosome {
 		if (instance == null) {
 			synchronized (FactoryChromosome.class) {
 				if (instance == null) {
-					lengthGenes = classification.getLegth();
+					lengthGenes = classification.getLength();
 					instance = new FactoryChromosome();
 				}
 			}

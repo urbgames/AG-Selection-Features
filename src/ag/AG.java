@@ -5,6 +5,10 @@ import java.util.List;
 
 import classificator.Classification;
 import excelGenerator.ChromosomeToExcel;
+import excelGenerator.ExcelGenerator;
+import mail.CreatableMail;
+import systemStatusControl.StatusControl;
+import systemStatusControl.StatusGA;
 import thread.ThreadManager;
 
 public class AG {
@@ -18,32 +22,40 @@ public class AG {
 	private Crossover crossover;
 	private Mutation mutation;
 	private FactoryChromosome factoryChromosome;
-	private ChromosomeToExcel chromosomeToExcel2;
 
-	public AG(int sizePopulation, int countGeneration, int order, Classification classifier) throws Exception {
-		this.chromosomeToExcel2 = new ChromosomeToExcel(classifier.getClassifierName() + "_ExperimentoGA" + order);
+	public AG(int sizePopulation, int maxInteration, int experiment, Classification classifier, int seed,
+			StatusGA... statusGA) throws Exception {
 		this.selection = new Selection();
 		this.fitness = new Fitness();
 		this.crossover = new Crossover();
 		this.mutation = new Mutation();
 		this.population = new ArrayList<>();
+
 		this.factoryChromosome = FactoryChromosome.getInstance(classifier);
 
-		for (int i = 0; i < sizePopulation; i++) {
-			ChromosomeBinary chromosome = factoryChromosome.factoryChromosome();
-			chromosome.randonInitializeGenesBinary();
-			population.add(chromosome);
+		int currentInteration = 0;
+		if (statusGA.length > 0) {
+			population = statusGA[0].getPopulacao();
+			seed = statusGA[0].getSeed();
+			currentInteration = statusGA[0].getCurrentInteretor() + 1;
+		} else {
+			population = new ArrayList<>();
+			for (int i = 0; i < sizePopulation; i++)
+				population.add(factoryChromosome.factoryChromosome());
 		}
 
-		chromosomeToExcel2.insertLabelRows2();
+		String nameFile = classifier.getClassifierName() + "_ExperimentoGA" + experiment;
 
-		for (int i = 0; i < countGeneration; i++) {
-			
+		ExcelGenerator excelGenerator = new ExcelGenerator(nameFile);
+		ChromosomeToExcel.createLabelExcel(excelGenerator);
+
+		for (; currentInteration < maxInteration; currentInteration++) {
+
 			long starTime = System.currentTimeMillis();
 
 			//
 			// EVALUATION FITNESS INITIAL
-			if (i == 0)
+			if (currentInteration == 0)
 				fitness.fitnessGeneratorClassificator(population, classifier);
 
 			// SELECTION PARENTS
@@ -70,16 +82,23 @@ public class AG {
 			population.addAll(selection.tournament(nextPopulation, sizePopulation - 1, false, 2));
 
 			long totalTime = System.currentTimeMillis() - starTime;
-			chromosomeToExcel2.converterChromosomeToExcelRow2(population, i, totalTime, classifier.getSeed());
+
+			ChromosomeToExcel.updateExcelByGeneration(excelGenerator, population, currentInteration, totalTime,
+					classifier.getSeed());
+			try {
+				StatusControl.insertOrUpdate(new StatusGA(population, currentInteration, maxInteration, experiment,
+						sizePopulation, seed, classifier.getClassifierName()));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 
 		}
 
-		chromosomeToExcel2.closeFile();
+		CreatableMail.sendMail(nameFile + ".xls", nameFile);
 
 	}
 
 	public static void main(String[] args) throws Exception {
-		System.out.println("GA");
 		new ThreadManager();
 	}
 
